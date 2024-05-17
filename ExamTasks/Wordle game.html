@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        input {
+            width: 100px;
+            height: 100px;
+            border: 1px solid black;
+            font-size: 100px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<script>
+    let data = '["bukva","jazik","vokal","misla","tablo","testo","pesto"]';
+    data = JSON.parse(data);
+    let randomIndex = Math.floor(Math.random() * data.length);
+    randomZbor = data[randomIndex];
+    console.log(randomZbor);
+    let count=0;
+    novaLinija();
+
+    function novaLinija() {
+        var novDiv = document.createElement("div");
+        document.body.appendChild(novDiv);
+        for (var i = 0; i < 5; i++) {
+            var createInput = document.createElement("input");
+            createInput.setAttribute("class", "box");
+            createInput.setAttribute("id", "Br" + count++);
+            createInput.addEventListener("keydown", function (e) {
+                if (e.key === "Enter") {
+                    proveriInputi();
+                }
+            })
+            novDiv.appendChild(createInput);
+        }
+        count = 0;
+    }
+    function proveriInputi(){
+        let check=true;
+        let inputs=document.getElementsByTagName("input");
+        for (let i = 0; i < 5; i++) {
+            let input=document.getElementById("Br"+i);
+            if (input.value.length > 1 || input.value.length < 1)
+            {
+                alert("Само еден буква по влез на инпут, пробај повторно");
+                check = false;
+                break;
+            }
+        }
+        if (check === true)
+        {
+            proveriZbor();
+        }
+    }
+    function proveriZbor(){
+        let sostavenZbor="";
+        let inputs=document.getElementsByTagName("input");
+        for (let i = 0; i < 5; i++) {
+            let idInputs=document.getElementById("Br"+i);
+            sostavenZbor+=idInputs.value;
+        }
+        for (let i = 0; i < inputs.length; i++) {
+            inputs[i].style.color="gray";
+            inputs[i].setAttribute("disabled","true");
+        }
+        if(sostavenZbor===randomZbor){
+            for (let i = 0; i < 5; i++) {
+                let idInputs=document.getElementById("Br"+i);
+                idInputs.style.backgroundColor="green";
+                document.body.style.backgroundColor="green";
+                $("#Br" + i).fadeOut(10);
+                $("#Br" + i).fadeIn(1100);
+            } 
+        }
+        if(sostavenZbor!==randomZbor){
+            for (let i = 0; i < 5; i++) {
+                let idInputs=document.getElementById("Br"+i);
+                for (let j = 0; j < 5; j++) {
+                    if(i!==j && sostavenZbor[i]===randomZbor[j]){
+                        idInputs.style.backgroundColor="yellow";
+                        $("#Br" + i).fadeOut(10);
+                        $("#Br" + i).fadeIn(1100);
+                    }
+                    if(i==j && sostavenZbor[i]===randomZbor[j]){
+                        idInputs.style.backgroundColor="green";
+                        $("#Br" + i).fadeOut(10);
+                        $("#Br" + i).fadeIn(1100);
+                    }
+                }
+            }
+            for (let i = 0; i < inputs.length; i++) {
+                inputs[i].removeAttribute("id");
+            }
+            novaLinija();
+            console.log(randomZbor);
+        }
+    }
+</script>
+</body>
+</html>

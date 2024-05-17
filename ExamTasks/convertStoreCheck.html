@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kolokvium 3</title>
+</head>
+<body>
+<input type="text" id="input">
+<button onclick="shiftLeftTwo()"><</button>
+<button onclick="shiftRightTwo()">></button>
+<button onclick="convert()">CONVERT</button>
+<button onclick="storeNum()">STORE</button>
+<button onclick="checkNum()">CHECK</button>
+<p id="prazenP"></p>
+<ul id="prazna">
+
+</ul>
+<!--//1234567891-->
+<script>
+    function shiftLeftTwo() {
+        if (proveriCifri()) {
+            let broj = document.getElementById("input");
+            let vrednost = parseInt(broj.value);
+            let prviDve = Math.floor(vrednost / 100000000);
+            let ostanati = Math.floor(vrednost % 100000000);
+            vrednost = ostanati * 100 + prviDve;
+            broj.value = vrednost;
+        }
+    }
+
+    function shiftRightTwo() {
+        if (proveriCifri()) {
+            let broj = document.getElementById("input");
+            let vrednost = parseInt(broj.value);
+            let poslDve = Math.floor(vrednost % 100);
+            let ostanati = Math.floor(vrednost / 100);
+            vrednost = poslDve * 100000000 + ostanati;
+            broj.value = vrednost;
+        }
+    }
+
+    function convert() {
+        if (proveriCifri()) {
+            let broj = document.getElementById("input");
+            let vrednost = broj.value;
+            let lista = vrednost.split("");
+            console.log(lista);
+            for (var i = 0; i < lista.length; i++) {
+                if (parseInt(lista[i]) - 2 < 0) {
+                    lista[i] = 10 - (parseInt(lista[i]) + 2);
+                } else {
+                    lista[i] = lista[i] - 2;
+                }
+            }
+            lista = lista.join("");
+            broj.value = lista;
+        }
+    }
+
+    // 1233345678
+    function checkNum() {
+        if (proveriCifri()) {
+            let broj = document.getElementById("input");
+            let vrednost = broj.value;
+            if (daliDelivi()) {
+                let prazen = document.getElementById("prazenP");
+                prazen.innerHTML = "Sovrsen broj!";
+
+            }
+        }
+    }
+
+    function storeNum() {
+        if (proveriCifri()) {
+            let broj = document.getElementById("input");
+            let vrednost = broj.value;
+            let pole = document.getElementById("prazna");
+            let li = document.createElement("li");
+            li.innerHTML = vrednost;
+            pole.append(li);
+            broj.value = "";
+        }
+    }
+
+    function daliDelivi() {
+        let broj = document.getElementById("input");
+        let vrednost = broj.value;
+        let lista = vrednost.split("");
+        var brojac = 0;
+        for (var i = 0; i < lista.length; i++) {
+            if (parseInt(lista[i]) % 3 === 0) {
+                brojac++;
+            }
+            if (brojac >= 3) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function izbrisiPoraka() {
+        if (!daliDelivi()) {
+            let poraka = document.getElementById("prazenP");
+            poraka.innerText = "";
+        }
+    }
+
+    function proveriCifri() {
+        let broj = document.getElementById("input").value;
+        if (broj.length !== 10) {
+            alert("Vnesete validen vlez!");
+            return false;
+        }
+        return true;
+    }
+</script>
+</body>
+</html>

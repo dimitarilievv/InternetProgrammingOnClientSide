@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Details</title>
+    <style>
+        input,select,span{
+            position: relative;
+            left:100px;
+            top:-30px;
+        }
+        div{
+            margin-top: -30px;
+        }
+        h1{
+            margin-bottom: 50px;
+        }
+        #average{
+            position: relative;
+            left:0px;
+            top:0px;
+        }
+        h2{
+            margin-bottom:40px;
+        }
+        #desen{
+            position: relative;
+            left: 400px;
+            top:-270px
+        }
+        table,td{
+            border:1px solid black;
+            border-collapse: collapse;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div id="lev">
+<h1>Details</h1>
+<div>
+    <p>Name</p>
+    <input type="text" id="name">
+</div>
+<div>
+    <p>Index</p>
+    <input type="text" id="index">
+</div>
+<div>
+    <p>Phone</p>
+    <input type="text" id="phone">
+</div>
+<div>
+    <p>Grade</p>
+    <input type="radio" id="radio1" name="isto"><span>5</span>
+    <input type="radio" id="radio2" name="isto"><span>6</span>
+    <input type="radio" id="radio3" name="isto"><span>7</span>
+    <input type="radio" id="radio4" name="isto"><span>8</span>
+    <input type="radio" id="radio5" name="isto"><span>9</span>
+    <input type="radio" id="radio6" name="isto"><span>10</span>
+</div>
+<div>
+    <p>Session</p>
+    <select id="session">
+        <option>January</option>
+        <option>June</option>
+        <option>September</option>
+    </select>
+</div>
+<button onclick="dodadiStudent()">Import student</button>
+</div>
+<div id="desen">
+    <h2>Revert history</h2>
+    <ul id="listaPrazna">
+
+    </ul>
+</div>
+<h2>Students(average grade:<span id="average">0</span>)</h2>
+<div>
+    <table id="tabela">
+        <tr>
+            <td>Name</td>
+            <td>Index</td>
+            <td>Phone</td>
+            <td>Grade</td>
+            <td>Session</td>
+            <td>Actions</td>
+        </tr>
+    </table>
+</div>
+<script>
+    var brojac=0;
+    var suma=0;
+    function dodadiStudent(){
+        let ime=document.getElementById("name").value;
+        let index=document.getElementById("index").value;
+        let tel=document.getElementById("phone").value;
+        let radio1=document.getElementById("radio1");
+        let radio2=document.getElementById("radio2");
+        let radio3=document.getElementById("radio3");
+        let radio4=document.getElementById("radio4");
+        let radio5=document.getElementById("radio5");
+        let radio6=document.getElementById("radio6");
+        let sesija=document.getElementById("session").value;
+        if(!(ime&&index&&tel)){
+            alert("ne e vneseno se");
+            return;
+        }
+        if(!(radio1.checked||radio2.checked||radio3.checked||radio4.checked ||radio5.checked || radio6.checked)){
+            alert("ne e vneseno se");
+            return;
+        }
+        brojac++;
+        let avrg=document.getElementById("average");
+        avrg.innerHTML=prosecnaOcenka();
+        let tab=document.getElementById("tabela");
+        let tr=document.createElement("tr");
+        tr.innerHTML="<td>"+ime+"</td><td>"+index+"</td><td>"+transfTelBroj()+"</td><td>"+vratiGrade()+"</td><td>"+sesija+"</td><td><button  onclick='potrdiKopce(this)'>Confirm</button><button id='kopceRevert' onclick='brisi(this)'>Revert</button></td>";
+        tab.append(tr);
+
+    }
+    function brisi(kopce){
+        let red=kopce.parentNode.parentNode;
+        brojac--;
+        suma-=vratiGrade();
+        // let avrg=document.getElementById("average");
+        // avrg.innerHTML=prosecnaOcenka();
+        red.remove();
+    }
+    function transfTelBroj(){
+        let tel=document.getElementById("phone").value;
+        let novTel=tel.slice(0,3)+"/"+tel.slice(3,6)+"-"+tel.slice(6);
+        return novTel;
+    }
+
+    function potrdiKopce(kopce){
+        var red=kopce.parentNode.parentNode;
+        red.style.background="lightgreen";
+        kopce.disabled=true;
+        let kopce2=document.getElementById("kopceRevert");
+        kopce2.disabled=true;
+    }
+    function prosecnaOcenka(){
+        suma+=vratiGrade();
+        return (suma/brojac).toFixed(2);
+    }
+    function vratiGrade(){
+        let radio1=document.getElementById("radio1");
+        let radio2=document.getElementById("radio2");
+        let radio3=document.getElementById("radio3");
+        let radio4=document.getElementById("radio4");
+        let radio5=document.getElementById("radio5");
+        let radio6=document.getElementById("radio6");
+        if(radio1.checked){
+            return 5;
+        }else if(radio2.checked){
+            return 6;
+        }else if(radio3.checked){
+            return 7;
+        }else if(radio4.checked){
+            return 8;
+        }else if(radio5.checked){
+            return 9;
+        }else if(radio6.checked){
+            return 10;
+        }
+    }
+</script>
+</body>
+</html>

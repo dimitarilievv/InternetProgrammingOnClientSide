@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Animation with anime.js</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <style>
+        #animatedElement {
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+
+<div id="animatedElement"></div>
+
+<script>
+    // Get the animated element
+    const animatedElement = document.getElementById('animatedElement');
+
+    // Use anime.js to create an animation
+    anime({
+        targets: animatedElement,
+        translateX: 200,  // Move the element horizontally by 200 pixels
+        duration: 1000,   // Animation duration in milliseconds
+        loop: true,       // Infinite loop
+        easing: 'easeInOutSine'  // Easing function
+    });
+</script>
+
+</body>
+</html>

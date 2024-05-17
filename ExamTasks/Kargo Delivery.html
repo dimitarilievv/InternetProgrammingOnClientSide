@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kargo Dostava</title>
+    <style>
+        input, span {
+            position: relative;
+            top: -35px;
+            left: 180px;
+        }
+        #empty{
+            position: relative;
+            top: 0px;
+            left: 0px;
+        }
+        div {
+            margin-bottom: -30px;
+        }
+
+        button {
+            margin-top: 20px;
+        }
+
+        #container {
+            display: flex;
+            flex-direction: row;
+            gap: 200px;
+        }
+        table,tr,td,th{
+            border: 1px solid black;
+            border-collapse: collapse;
+            text-align: center;
+        }
+        .akcii{
+            text-align: center;
+            width: 90px;
+            margin: 8px 20px 10px 25px;
+            display: block;
+        }
+        /*.fade-out{*/
+            /*opacity: 0; fade out*/
+            /*transition: opacity 0.5s ease;*/
+            /*height: 0; slide out*/
+            /*overflow: hidden;*/
+            /*transition: height 0.5s ease;*/
+        .rotate-out {
+            transform: rotate(45deg);
+            opacity: 0;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        /*}*/
+    </style>
+</head>
+<body>
+<h1>Карго достава на пратки</h1>
+<div>
+    <p>Адреса на испраќач:</p>
+    <input type="text" id="adresaIsprakjac">
+</div>
+<div>
+    <p>Адреса на примач:</p>
+    <input type="text" id="adresaPrimac">
+</div>
+<div>
+    <p>Тежина на пратка:</p>
+    <input type="text" id="tezina">
+</div>
+<div>
+    <p>Начин на плаќање:</p>
+    <span>Праќање:</span><input type="radio" name="isto" id="nacin1">
+    <span> Примање:</span><input type="radio" name="isto" id="nacin2">
+</div>
+<div>
+    <p>ID на профил:</p>
+    <input type="text" id="idProfil">
+</div>
+<button onclick="add()">Внеси</button>
+<div id="container">
+    <div>
+        <h3>Внесени пратки</h3>
+        <h4>Вкупна сума:<span id="empty">0</span></h4>
+        <table id="table">
+            <tr>
+                <th>ID</th>
+                <th>Адреса испраќач</th>
+                <th>Адреса примач</th>
+                <th>Цена</th>
+                <th>Акции</th>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <h3>Oткажани нарачки</h3>
+        <ul id="emptyList">
+
+        </ul>
+    </div>
+</div>
+<script>
+    class Naracka{
+        isprakjac;
+        primac;
+        tezina;
+        nacin;
+        id;
+        constructor(isprakjac, primac, tezina, nacin, id) {
+            this.isprakjac = isprakjac;
+            this.primac = primac;
+            this.tezina = tezina;
+            this.nacin = nacin;
+            this.id = id;
+        }
+    }
+    let naracki=[];
+    function readDataFromJSON(jsonString){
+        try {
+            let parsedData = JSON.parse(jsonString);
+            parsedData.forEach(data => {
+                let adresaIsprakjac = data.address_from;
+                let adresaPrimac = data.address_to;
+                let tezina = data.weight;
+                let nacin = (data.paid_type === "on_send") ? "Праќање" : "Примење";
+                let idProfil = data.ID;
+
+                let tabela = document.getElementById("table");
+                let tr = document.createElement("tr");
+                tr.innerHTML = "<td>" + idProfil + "</td>" +
+                    "<td>" + adresaIsprakjac + "</td>" +
+                    "<td>" + adresaPrimac + "</td>" +
+                    "<td>" + cena(tezina) + "</td>" +
+                    "<td><button class='akcii' onclick='dostaveno(this," + cena(tezina) + ")'>Доставено</button>" +
+                    "<button class='akcii' onclick='otkazano(this)'>Откажано</button></td>";
+                tabela.append(tr);
+
+                naracki.push(new Naracka(adresaIsprakjac, adresaPrimac, tezina, nacin, idProfil));
+            });
+        }catch (error){
+            console.error("Errrrrrrrrror");
+        }
+    }
+    let jsonString='[{"address_from":"Partizanska 1", "address_to":"Kliment Ohridski 15", "weight":"3.5", "paid_type":"on_send", "ID":"Id902 90sUsdql3", "delivery": "on_hold"},{"address_from":"Ruzveltova 3", "address_to":"3MUB 43", "weight":"15", "paid_type":"on_receive", "ID":"W8902 90sWmPqLzl3", "delivery": "false"}]';
+    readDataFromJSON(jsonString);
+    function add(){
+        let adresaIsprakjac=document.getElementById("adresaIsprakjac").value;
+        let adresaPrimac=document.getElementById("adresaPrimac").value;
+        let tezina=document.getElementById("tezina").value;
+        let nacin1=document.getElementById("nacin1");
+        let nacin2=document.getElementById("nacin2");
+        let idProfil=document.getElementById("idProfil").value;
+        if(adresaIsprakjac===""||adresaPrimac===""||tezina===""
+        ||idProfil===""||(!nacin1.checked&&!nacin2.checked)){
+            alert("Nevalidni input polinja");
+            return;
+        }
+        let nacin;
+        if(nacin1.checked){
+            nacin="Праќање";
+        }else{
+            nacin="Примење";
+        }
+        let flag=0;
+        for (let i = 0; i < naracki.length; i++) {
+            if(naracki[i].id.toLowerCase()===idProfil.toLowerCase()){
+                flag=1;
+            }
+        }
+        if(flag===1){
+            alert("ima veke aktivna naracka so ova id");
+            return;
+        }
+        console.log(naracki);
+        let tabela=document.getElementById("table");
+        let tr=document.createElement("tr");
+        tr.innerHTML="<td>"+novID(idProfil)+"</td>" +
+            "<td>"+adresaIsprakjac+"</td>" +
+            "<td>"+adresaPrimac+"</td>" +
+            "<td>"+cena(tezina)+"</td>" +
+            "<td><button class='akcii' onclick='dostaveno(this,"+cena(tezina)+")'>Доставено</button>" +
+            "<button class='akcii' onclick='otkazano(this)'>Откажано</button></td>"
+        tabela.append(tr);
+
+        naracki.push(new Naracka(adresaIsprakjac,adresaPrimac,tezina,nacin,idProfil));
+    }
+    let suma=0;
+    function dostaveno(kopce,cenaa){
+        let parent=kopce.parentNode;
+        parent.parentNode.style.background="lightgreen";
+        parent.querySelectorAll("button")
+            .forEach(I=>I.disabled=true);
+        let brojac=document.getElementById("empty");
+        suma+=parseFloat(cenaa);
+        brojac.innerText=suma.toString();
+    }
+    function otkazano(kopce){
+        let roditel=kopce.parentNode.parentNode;
+        roditel.classList.add("rotate-out");
+        setTimeout(function (){
+            roditel.remove();
+        },500);
+        let idProfil=roditel.querySelector('td:first-child').innerHTML;
+        let kod=novID(idProfil);
+        let praznaLista=document.getElementById("emptyList");
+        let li=document.createElement("li");
+        li.innerText=kod;
+        praznaLista.append(li);
+    }
+    function novID(id){
+        let novId;
+        novId=id.toLowerCase();
+        novId=novId.replaceAll(" ","-");
+        return novId;
+    }
+    function cena(tezina){
+        let c;
+        if(parseFloat(tezina)<5){
+            c=500;
+        }else{
+            c=1200;
+        }
+        return parseFloat(c);
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Osiguruvanje na vozila</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        input, span {
+            position: relative;
+            left: 220px;
+            top: -38px;
+        }
+
+        div {
+            margin-bottom: -30px;
+        }
+
+        button {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        #brojac {
+            position: relative;
+            left: 0px;
+            top: 0px;
+        }
+    </style>
+</head>
+<body>
+<h1>Осигурување на возила</h1>
+<div>
+    <p >Име</p>
+    <input type="text" id="ime">
+</div>
+<div>
+    <p >Презиме</p>
+    <input type="text" id="prezime">
+</div>
+<div>
+    <p>Регистарска таблица</p>
+    <input type="text" id="regist">
+</div>
+<div>
+    <p >Години на старост</p>
+    <input type="text" id="godina">
+</div>
+<div>
+    <p>Сообраќајна незгода</p>
+    <input type="radio" id="radio1" name="isto"><span>Да</span>
+    <input type="radio" id="radio2" name="isto"><span>Не</span>
+</div>
+<div>
+    <button id="kopce" onclick="generiraj()">Генерирај сметка</button>
+</div>
+<br>
+
+<h3>Сметки</h3>
+<p>Вкупно сметки за плаќање: <span id="brojac">0</span></p>
+<!--<p>Вкупно сметки за плаќање:</p>-->
+<div id="prazen">
+
+</div>
+<script>
+    let counter = 0;
+
+    function generiraj() {
+        var flag=0;
+        counter++;
+        let lista = document.getElementsByTagName("input");
+        var radio1 = document.getElementById("radio1");
+        var radio2 = document.getElementById("radio2");
+        let regist = document.getElementById("regist").value;
+        for (let i = 0; i < lista.length; i++) {
+            if (lista[i]&& (radio1.checked||radio2.checked)) {
+                  flag=1;
+            }else{
+                alert("ne e vneseno se!")
+                return;
+            }
+        }
+        if(flag===1){
+            if (proverkaNaRegistracija() === true) {
+                let regist = document.getElementById("regist").value;
+                var suma = 3000;
+                var flag = 1;
+                var broj = regist.slice(3, 7);
+                // console.log(broj);
+                broj = broj.toString();
+                for (var i = 0; i < broj.length; i++) {
+                    if (broj[0] !== broj[i]) {
+                        flag = 0;
+                    }
+                }
+                if (flag === 1) {
+                    suma += 1000;
+                }
+            }
+            var dali = radio1.checked;
+            if (dali === true) {
+                suma += 500;
+            }
+            let br = document.getElementById("brojac");
+            br.innerHTML = counter;
+
+            let pole = document.getElementById("prazen");
+            let div=document.createElement("div");
+            let name=document.getElementById("ime").value;
+            let surname=document.getElementById("prezime").value;
+            let register=document.getElementById("regist").value;
+            let godina=document.getElementById("godina").value;
+            var brojSoobr="";
+            if(dali===true){
+                brojSoobr="Има";
+            }else{
+                brojSoobr="Нема";
+            }
+            if(!proverkaNaRegistracija()){
+                alert("Ne se tocni");
+                return;
+            }
+            div.innerHTML="<p>"+name+" "+surname+"</p>"+"<p>"+register+"</p>"+"<p>Сообраќајки:"+brojSoobr+"</p>"+"<p>Старост на возило: "+godina+"</p>"+"<p>За плаќање: "+suma+"</p>"+
+                "<button onclick='platiSmetka(this)'>Плати</button>"+"<button onclick='izbrisiSmetka(this)'>Избриши</button>";
+            pole.append(div);
+
+            div.style.border="1px solid black";
+            div.style.display="inline-block";
+            div.style.padding="20px";
+            div.style.marginRight="10px";
+            if(godina>30){
+                div.style.background="red";
+            }else{
+                div.style.background="lightgreen";
+            }
+
+        }
+
+
+        izbrisi();
+
+    }
+
+    function proverkaNaRegistracija() {
+        let regist = document.getElementById("regist").value;
+        if (regist.match(/^[A-Z][A-Z]-[0-9][0-9][0-9][0-9]-[A-Z][A-Z]$/)){
+           return true;
+        } else {
+            return false;
+        }
+    }
+
+    function izbrisi() {
+        let lista = document.getElementsByTagName("input");
+        var radio1 = document.getElementById("radio1");
+        var radio2 = document.getElementById("radio2");
+        let regist = document.getElementById("regist").value;
+        for (var i = 0; i < lista.length; i++) {
+            if (lista[i].type === 'radio') {
+                lista[i].checked = false;
+            } else {
+                lista[i].value = "";
+            }
+        }
+    }
+
+    function platiSmetka(kopce1){
+        var  roditel=kopce1.parentNode;
+        var kopcinja=roditel.getElementsByTagName("button");
+        kopcinja[0].disabled=true;
+        kopcinja[1].disabled=true;
+    }
+    function izbrisiSmetka(kopce){
+        var  roditel=kopce.parentNode;
+        roditel.remove();
+    }
+</script>
+</body>
+</html>

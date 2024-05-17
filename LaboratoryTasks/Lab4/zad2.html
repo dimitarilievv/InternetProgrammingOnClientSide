@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Zad2</title>
+    <style>
+        select {
+            width: 170px;
+            margin-left: 5px;
+            height: 20px;
+        }
+
+        div {
+            margin-bottom: 10px;
+        }
+
+        button {
+            margin-left: 141px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    Items:<input type="text" id="items">
+</div>
+<div>
+    Type:<select id="type">
+    <option>Radio Button</option>
+    <option>Check box</option>
+</select>
+</div>
+<div>
+    <button onclick="prikazi()">Прикажи</button>
+</div>
+<div id="prazen">
+
+</div>
+<script>
+    function prikazi() {
+        let prazen = document.getElementById("prazen");
+        let items = document.getElementById("items").value;
+        let listItems = items.split(",");
+        let selected = document.getElementById("type").value;
+
+        for (let i = 0; i < listItems.length; i++) {
+            let inputElement;
+            let label=document.createElement("label");
+            label.innerHTML=listItems[i];
+
+            if(selected==="Radio Button"){
+                inputElement=document.createElement("input");
+                inputElement.setAttribute("type", "radio");
+            }else if(selected==="Check box"){
+                inputElement=document.createElement("input");
+                inputElement.setAttribute("type", "checkbox");
+            }
+            inputElement.setAttribute("name","isto");
+            prazen.append(inputElement);
+            prazen.append(label);
+
+        }
+    }
+
+</script>
+</body>
+</html>

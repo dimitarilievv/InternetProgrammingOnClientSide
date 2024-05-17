@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <span id="num1">1</span>
+    <span id="num2">2</span>
+    <span id="num3">3</span>
+    <span id="num4">4</span>
+    <span id="num5">5</span>
+    <span>=</span>
+    <span id="num6">1</span>
+</div>
+<div>
+    <input type="text" id="input">
+    <button onclick="proveri()" id="button">Провери</button>
+</div>
+<div>Преостанато време <span id="vreme">60</span> секудни</div>
+</body>
+<script>
+    let niza = [];
+    let num1 = document.getElementById("num1");
+    let num2 = document.getElementById("num2");
+    let num3 = document.getElementById("num3");
+    let num4 = document.getElementById("num4");
+    let num5 = document.getElementById("num5");
+    let num6 = document.getElementById("num6");
+
+    let random1 = Math.floor(Math.random() * 9) + 1;
+    let random2 = Math.floor(Math.random() * 9) + 1;
+    let random3 = Math.floor(Math.random() * 90) + 10;
+    let random4 = Math.floor(Math.random() * 90) + 10;
+    let random5 = Math.floor(Math.random() * 900) + 100;
+    let random6 = Math.floor(Math.random() * 900) + 100;
+    niza.push(random1);
+    niza.push(random2);
+    niza.push(random3);
+    niza.push(random4);
+    niza.push(random5);
+
+    num1.innerText = random1;
+    num2.innerText = random2;
+    num3.innerText = random3;
+    num4.innerText = random4;
+    num5.innerText = random5;
+    num6.innerText = random6;
+
+    console.log(niza);
+    let input = document.getElementById("input");
+    let button=document.getElementById("button");
+
+    function proveri() {
+        let brojac = 0;
+        for (let i = 0; i < 5; i++) {
+            if (input.value.includes(niza[i])) {
+                brojac++;
+            }
+        }
+        if (brojac !== 5) {
+            alert("treba da se sostoi od isti cifri gore!");
+            return;
+        }
+        let presmetka=eval(input.value);
+        if(presmetka===random6){
+          button.disabled=true;
+          input.disabled=true;
+        }
+    }
+    let broj=59;
+  let span=document.getElementById("vreme");
+    let interval=setInterval(()=>{
+      span.innerText=broj;
+      broj--;
+
+    },1000);
+    setTimeout(()=>{
+      clearInterval(interval);
+        button.disabled=true;
+        input.disabled=true;
+    },60000);
+
+
+</script>
+</html>

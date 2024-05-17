@@ -1,0 +1,108 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <title>Flip,check,store</title>
+  </head>
+  <body>
+  <input type="text" id="vlez">
+  <button onclick="shiftLeft()"><</button>
+  <button onclick="shiftRight()">></button>
+  <button onclick="flipNumber()">FLIP</button>
+  <button onclick="storeNumber()">STORE</button>
+  <button onclick="checkNumber()">CHECK</button>
+  <div id="div">
+      <p id="prazenP">
+
+      </p>
+      <ul id="storedNumbers"></ul>
+  </div>
+
+  <script>
+      function proveriCifri() {
+          let broj = document.getElementById("vlez");
+          if (broj.value.length !== 10) {
+              alert("Pogresen vlez");
+              return true;
+          }
+          return false;
+      }
+
+      function shiftLeft() {
+          if (!proveriCifri()) {
+              let broj = document.getElementById("vlez");
+              let vrednost = parseInt(broj.value);
+              let prvaCifra = Math.floor(vrednost / 1000000000);
+              let ostanati = Math.floor(vrednost % 1000000000);
+              vrednost = ostanati * 10 + prvaCifra;
+              console.log(vrednost);
+              broj.value = vrednost.toString();
+              izbrisiPoraka();
+          }
+      }
+
+      function shiftRight() {
+          if (!proveriCifri()) {
+              let broj = document.getElementById("vlez");
+              let vrednost = parseInt(broj.value);
+              let poslCifra = Math.floor(vrednost % 10);
+              let prviCifri = Math.floor(vrednost / 10);
+              vrednost = prviCifri + poslCifra * 1000000000;
+              console.log(vrednost);
+              broj.value = vrednost.toString();
+              izbrisiPoraka();
+          }
+      }
+
+      function flipNumber() {
+          if (!proveriCifri()) {
+              let broj = document.getElementById("vlez");
+              let vrednost = broj.value;
+              vrednost = vrednost.split("").reverse().join("");
+              console.log(vrednost);
+              broj.value = vrednost;
+          }
+      }
+
+      function daliEPerfekten() {
+          let broj = document.getElementById("vlez");
+          let vrednost = broj.value;
+          vrednost = vrednost.split("");
+          for (var i = 0; i < vrednost.length; i++) {
+            if (parseInt(vrednost[i]) % 2 === 0 && parseInt(vrednost[i + 1]) % 2 === 0) {
+              return true;
+            }
+          }
+        return false;
+      }
+
+      function checkNumber() {
+          if (!proveriCifri()) {
+              let broj = document.getElementById("vlez");
+              let vrednost = broj.value;
+              vrednost = vrednost.split("");
+              for (var i = 0; i < vrednost.length-1; i++) {
+                  if (parseInt(vrednost[i]) % 2 === 0 && parseInt(vrednost[i + 1]) % 2 === 0) {
+                     let poraka=document.getElementById("prazenP");
+                     poraka.innerHTML="Perfekten broj!";
+                  }
+              }
+          }
+      }
+
+      function izbrisiPoraka() {
+          if (!daliEPerfekten()) {
+              let poraka = document.getElementById("prazenP");
+              poraka.innerText="";
+          }
+      }
+      function storeNumber(){
+        let broj=document.getElementById("vlez").value;
+        let pole=document.getElementById("storedNumbers");
+        let item=document.createElement("li");
+        item.innerHTML=broj;
+        pole.append(item);
+      }
+  </script>
+  </body>
+  </html>

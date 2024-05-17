@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smetki</title>
+    <style>
+        input {
+            position: relative;
+            left: 100px;
+        }
+
+        p {
+            position: relative;
+            top: 35px;
+        }
+    </style>
+</head>
+<body>
+<h2>Систем за сметки</h2>
+<div>
+    <p>Име:</p>
+    <input type="text" id="ime">
+</div>
+<div>
+    <p>Презиме:</p>
+    <input type="text" id="prezime">
+</div>
+<div>
+    <p>ID:</p>
+    <input type="text" id="id">
+</div>
+<div>
+    <p>Промет:</p>
+    <input type="text" id="promet">
+</div>
+</br>
+<div>
+    <button onclick="zacuvaj()">Зачувај</button>
+</div>
+<h3>Внесени сметки</h3>
+<div id="prazen">
+
+</div>
+<script>
+    // let ime=document.getElementById("ime");
+    // let prezime=document.getElementById("prezime");
+    // let id=document.getElementById("id");
+    // let promet=document.getElementById("promet");
+    // if(ime==="" || prezime==="" || id==="" || promet==="")
+    function zacuvaj() {
+        var x = document.getElementsByTagName("input");
+        for (var i = 0; i < x.length; i++) {
+            if (x[i].value === "") {
+                alert("Popolni gi site polinja");
+            }
+        }
+        let id = document.getElementById("id").value;
+        let brojacBukvi = 0;
+        let brojacCifri = 0;
+        if (id.length === 10) {
+            for (var i = 0; i < id.length; i++) {
+                if (id[i].match(/^[A-Z]$/)) {
+                    brojacBukvi++;
+                }
+                if (id[i].match(/^[0-9]$/)) {
+                    brojacCifri++;
+                }
+            }
+            if (brojacBukvi >= 3) {
+                if (brojacCifri === 1) {
+                    kreiraj();
+                } else {
+                    alert("Id-to mora da sobrzi edna cifra")
+                }
+            } else {
+                alert("Id-to mora da sodrzi barem 3 golemi bukvi");
+            }
+        } else {
+            alert("Vnesi 10cifren ID");
+        }
+    }
+
+    function kreiraj() {
+        let ime = document.getElementById("ime").value;
+        let prezime = document.getElementById("prezime").value;
+        let id = document.getElementById("id").value;
+        let promet = document.getElementById("promet").value;
+        let pole = document.getElementById("prazen");
+        let lista = document.createElement("div");
+        let broj=Math.round(Math.random()*100000);
+        console.log(ime,prezime,id,promet);
+        lista.innerHTML = "<p>Сметка број: "+ broj +"</p>" +
+            "<p>Име: "+ime +"</p>" +
+            "<p>ID: "+id +"</p>" +
+            "<p>Промет: "+promet+"</p></br>" +
+            "<button onclick='plati(this)'>Плати</button>"
+        pole.append(lista);
+        if(promet<5000){
+            lista.style.background="green";
+            lista.style.border="1px solid black";
+            lista.style.display="inline-block";
+            lista.style.padding="20px";
+        }else{
+            lista.style.background="red";
+            lista.style.border="1px solid black";
+            lista.style.display="inline-block";
+            lista.style.padding="20px";
+        }
+        var x = document.getElementsByTagName("input");
+        for (var i = 0; i < x.length; i++) {
+            x[i].value ="";
+        }
+    }
+    function plati(kopce){
+        kopce.disabled=true;
+    }
+
+</script>
+</body>
+</html>

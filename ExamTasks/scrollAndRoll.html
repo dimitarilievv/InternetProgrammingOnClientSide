@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Scroll and Roll</title>
+    <style>
+        #firstDigit, #secondDigit {
+            border: 2px solid black;
+            width: 70px;
+            height: 70px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <input type="number" id="input">
+    <button onclick="rollNumbers()">Roll</button>
+</div>
+<div>
+    <input id="firstDigit">
+    <input id="secondDigit">
+</div>
+<div>
+    <button onclick="toJSON()">History to json</button>
+</div>
+<script>
+    let jsonData = [];
+    var kocki = [];
+
+    function rollNumbers() {
+        let firstDigit = document.getElementById("firstDigit");
+        let secondDigit = document.getElementById("secondDigit");
+        let input = document.getElementById("input");
+        input.style.background = "white";
+        let inputNumber = parseInt(input.value, 10);
+
+        if (isNaN(inputNumber) || input.value.length !== 2) {
+            alert("Vnesi dvocifren broj!");
+            return;
+        }
+
+        let randomBroj, randomBroj2;
+        let rollingInterval = setInterval(() => {
+            randomBroj = Math.floor((Math.random() * 6) + 1);
+            randomBroj2 = Math.floor((Math.random() * 6) + 1);
+            firstDigit.value = randomBroj;
+            secondDigit.value = randomBroj2;
+            firstDigit.style.fontSize = 70 + "px";
+            secondDigit.style.fontSize = 70 + "px";
+            firstDigit.style.textAlign = "center";
+            secondDigit.style.textAlign = "center";
+        }, 100);
+
+        setTimeout(() => {
+            clearInterval(rollingInterval);
+            kocki.push(randomBroj);
+            kocki.push(randomBroj2);
+            input.disabled = true;
+
+            let randomFinal = randomBroj + randomBroj2;
+            if (randomFinal === inputNumber) {
+                input.style.background = "lightgreen";
+            } else {
+                input.style.background = "red";
+            }
+        }, 500);
+
+        jsonData.push({input: inputNumber, dices: kocki});
+        console.log(jsonData);
+    }
+
+    function toJSON() {
+        alert(JSON.stringify(jsonData));
+    }
+</script>
+</body>
+</html>

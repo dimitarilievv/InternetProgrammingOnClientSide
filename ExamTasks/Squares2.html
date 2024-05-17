@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Slide</title>
+    <style>
+        div {
+            margin-bottom: 10px;
+            overflow: hidden;
+            transition: margin-left 3s ease;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <button onclick="slideLeft()"><</button>
+    <button onclick="slideRight()">></button>
+</div>
+<div id="prazen">
+
+</div>
+<script>
+    let data = '[{"background-color":"red", "width":"100px", "height":"100px"}, ' +
+        '{"background-color":"green", "width":"50px", "height":"100px"}, ' +
+        '{"background-color":"blue", "width":"100px", "height":"50px"}]';
+    data = JSON.parse(data);
+    let prazen = document.getElementById("prazen");
+    let currFormIndex = 0;
+    let slided = 0;
+
+    function createForm(index) {
+        let div = document.createElement("div");
+        let c = data[index]["background-color"];
+        let w = parseInt(data[index].width);
+        let h = parseInt(data[index].height);
+        div.style.background = c;
+        div.style.width = w + "px";
+        div.style.height = h + "px";
+        div.setAttribute("id", "forma")
+        prazen.append(div);
+    }
+
+
+    function slideLeft() {
+        let forma = document.getElementById("forma");
+        forma.style.marginLeft = window.innerWidth + "px";
+        setTimeout(() => {
+            forma.style.marginLeft = 0 + "px";
+        }, 1000);
+        setTimeout(() => {
+            prazen.removeChild(forma);
+            currFormIndex = (currFormIndex + 1) % data.length;
+            createForm(currFormIndex);
+        }, 2000);
+    }
+
+    function slideRight() {
+        let forma = document.getElementById("forma");
+        forma.style.marginLeft = window.innerWidth + "px";
+        slided = 1;
+        setTimeout(() => {
+            prazen.removeChild(forma);
+            currFormIndex = (currFormIndex - 1 + data.length) % data.length;
+            createForm(currFormIndex);
+        }, 2000);
+
+    }
+
+    function changeForm(index) {
+        let div = document.getElementById("forma");
+        let c = data[index]["background-color"];
+        let w = parseInt(data[index].width);
+        let h = parseInt(data[index].height);
+        div.style.background = c;
+        div.style.width = w + "px";
+        div.style.height = h + "px";
+        div.style.marginLeft = 0 + "px";
+        div.setAttribute("id", "forma");
+        prazen.append(div);
+    }
+
+    createForm(currFormIndex);
+</script>
+</body>
+</html>

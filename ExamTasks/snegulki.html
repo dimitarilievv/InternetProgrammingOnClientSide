@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Snegulki</title>
+    <style>
+        img{
+            width: 140px;
+            height: 140px;
+        }
+        .makefall{
+            position: absolute;
+            animation: fallAnimation linear infinite;
+        }
+        @keyframes fallAnimation {
+            to{
+                transform:translateY(100vh);
+            }
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+
+</div>
+<script>
+    let sliki=["s1.png","s2.png","s3.png","s4.png","s5.png","s6.png"];
+    let container=document.getElementById("container");
+    function createFallingImage(imgsrc){
+        let element=document.createElement("img");
+        element.src=imgsrc;
+        element.classList.add("makefall");
+        element.style.left=Math.random()*window.innerWidth+"px";
+        element.style.top="-100px";
+        document.body.appendChild(element);
+        setTimeout(function (){
+            element.style.animationDuration=Math.random()*2+1+"s";
+        },0);
+    }
+function startFalling(){
+    for (let i = 0; i <sliki.length; i++) {
+        createFallingImage(sliki[i]);
+    }
+}
+    startFalling();
+</script>
+</body>
+</html>

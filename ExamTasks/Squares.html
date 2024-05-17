@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kocki</title>
+    <style>
+        .fadeIN {
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .moveIn {
+            transition: left 2s ease-in-out, top 2s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+<script>
+    let data = '[{"color":"red", "size":"50"},{"color":"blue", "size":"40"},{"color":"orange", "size":"30"},{"color":"green", "size":"20"},{"color":"yellow", "size":"50"}]';
+    data = JSON.parse(data);
+    for (let i = 0; i < 5; i++) {
+        let color = data[i].color;
+        let size = parseInt(data[i].size);
+        let div = document.createElement("div");
+        div.style.backgroundColor = color;
+        div.style.width = size + "px";
+        div.style.height = size + "px";
+        div.style.position = "absolute";
+        div.style.left = Math.floor(Math.random() * 1200) + "px";
+        div.style.top = Math.floor(Math.random() * 600) + "px";
+        // div.classList.add("div");
+        div.addEventListener('click', razdeli);
+        document.body.appendChild(div);
+    }
+
+    function razdeli() {
+        this.remove();
+        let boja = this.style.backgroundColor;
+        let left = parseInt(this.style.left);
+        let top = parseInt(this.style.top);
+        let sirina = parseInt(this.style.width);
+        let visina = parseInt(this.style.height);
+
+
+        let gore_levo = document.createElement('div')
+        document.body.appendChild(gore_levo).addEventListener('click', razdeli);
+        gore_levo.style.position = "absolute";
+        gore_levo.style.left = (left - (sirina / 2) - 20) + "px";
+        gore_levo.style.backgroundColor = boja;
+        gore_levo.style.top = top - (visina / 2) - 20 + "px";
+        gore_levo.style.width = sirina + "px";
+        gore_levo.style.height = visina + "px";
+        gore_levo.classList.add("fadeIN", "moveIn");
+
+
+        let gore_desno = document.createElement('div');
+        document.body.appendChild(gore_desno).addEventListener('click', razdeli);
+        gore_desno.style.position = "absolute";
+        gore_desno.style.left = (left + (sirina / 2) + 20) + "px";
+        gore_desno.style.backgroundColor = boja;
+        gore_desno.style.top = top - (visina / 2) - 20 + "px";
+        gore_desno.style.width = sirina + "px";
+        gore_desno.style.height = visina + "px";
+        gore_desno.classList.add("fadeIN", "moveIn");
+
+        let dole_levo = document.createElement('div');
+        document.body.appendChild(dole_levo).addEventListener('click', razdeli);
+        dole_levo.style.position = "absolute";
+        dole_levo.style.left = (left - (sirina / 2) - 20) + "px";
+        dole_levo.style.backgroundColor = boja;
+        dole_levo.style.top = top + (visina / 2) + 20 + "px";
+        dole_levo.style.width = sirina + "px";
+        dole_levo.style.height = visina + "px";
+        dole_levo.classList.add("fadeIN", "moveIn");
+
+        let dole_desno = document.createElement('div');
+        document.body.appendChild(dole_desno).addEventListener('click', razdeli);
+        dole_desno.style.position = "absolute";
+        dole_desno.style.left = (left + (sirina / 2) + 20) + "px";
+        dole_desno.style.backgroundColor = boja;
+        dole_desno.style.top = top + (visina / 2) + 20 + "px";
+        dole_desno.style.width = sirina + "px";
+        dole_desno.style.height = visina + "px";
+        dole_desno.classList.add("fadeIN", "moveIn");
+    }
+</script>
+</body>
+</html>

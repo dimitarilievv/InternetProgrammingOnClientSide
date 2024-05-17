@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <style>
+    #container-main{
+      display: block;
+    }
+    #container1,#container2,#container3,button{
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+<div id="container-main">
+  <div id="container1">
+    <input type="text" size="2" id="realen1">
+    <input type="text" size="2" id="imaginaren1">i
+  </div>
+  <div id="container2">
+    <input type="text" size="2" id="realen2">
+    <input type="text" size="2" id="imaginaren2">i
+  </div>
+  <button onclick="add()">Add</button>
+  <div id="container3">
+    <input type="text" size="2" id="realen3">
+    <input type="text" size="2" id="imaginaren3">i
+  </div>
+</div>
+<script>
+  function add(){
+    let r1=parseInt(document.getElementById("realen1").value);
+    let r2=parseInt(document.getElementById("realen2").value);
+    let r3=document.getElementById("realen3");
+    let i1=parseInt(document.getElementById("imaginaren1").value);
+    let i2=parseInt(document.getElementById("imaginaren2").value);
+    let i3=document.getElementById("imaginaren3");
+    r3.value=r1+r2;
+    i3.value=i1+i2;
+  }
+</script>
+</body>
+</html>

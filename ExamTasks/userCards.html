@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cards</title>
+    <style>
+      input,select{
+        position: relative;
+        left:140px;
+        top:-35px;
+        width: 200px;
+      }
+      select{
+        text-align: center;
+      }
+      div{
+        margin-bottom: -30px;
+      }
+      button{
+        margin-top: 20px;
+      }
+      .px{
+        position: relative;
+        left:140px;
+        top:-35px;
+      }
+    </style>
+</head>
+<body>
+<h1>User Cards</h1>
+<div>
+  <p>Username</p>
+  <input type="text" id="username">
+</div>
+<div>
+  <p>Id</p>
+  <input type="text" id="id">
+</div>
+<div>
+  <p>Width</p>
+  <input type="text" id="width"><span class="px">px</span>
+</div>
+<div>
+  <p>Height</p>
+  <input type="text" id="height"><span class="px">px</span>
+</div>
+<div>
+  <p>Color</p>
+  <select id="color">
+    <option>blue</option>
+    <option>red</option>
+    <option>yellow</option>
+    <option>green</option>
+  </select>
+</div>
+<button onclick="dodadi()">Add</button>
+<p>Вкупно продадени:<span id="vkupno">0</span></p>
+<div id="prazen">
+
+</div>
+<script>
+  let vkCena=0;
+  let listaId=[];
+  function dodadi(){
+    let username=document.getElementById("username").value;
+    let id=document.getElementById("id").value;
+    let width=document.getElementById("width").value;
+    let height=document.getElementById("height").value;
+    let color=document.getElementById("color").value;
+    if(!(username&&id&&width&&height)){
+      alert("Внесете ги сите полиња!");
+      return;
+    }
+    if(proveriId()===false){
+      alert("Nevaliden ID");
+      return;
+    }
+    if(!proveriDolzSirina()){
+      alert("Nevaliden vlez za sirina/dolzina");
+      return;
+    }
+    if (listaId.includes(id)) {
+      let div=document.getElementById("divv");
+      div.innerHTML="<p>Id:"+id+"</p><p>Width:"+width+"</p><p>Height:"+height+"</p><p>Color:"+color+"</p><p>Vkupna suma:"+vkCena+"</p><button onclick='izbrisi(this)'>Sell</button>";
+      let sirina=parseInt(width);
+      let dolzina=parseInt(height);
+      div.style.width=sirina + "px";
+      div.style.height= dolzina+ "px";
+      div.style.background=color;
+      return;
+    }
+    listaId.push(id);
+    if(color==="red"){
+      vkCena=cena()+1000;
+    }else{
+      vkCena=cena();
+    }
+
+    let prazen=document.getElementById("prazen");
+    let div=document.createElement("div");
+    div.innerHTML="<p>Id:"+id+"</p><p>Width:"+width+"</p><p>Height:"+height+"</p><p>Color:"+color+"</p><p>Vkupna suma:"+vkCena+"</p><button onclick='izbrisi(this)'>Sell</button>";
+    div.setAttribute("id","divv");
+    div.style.background=color;
+    div.style.display="inline-block";
+    div.style.marginRight="15px";
+    div.style.textAlign="center";
+    let sirina=parseInt(width);
+    let dolzina=parseInt(height);
+    div.style.width=sirina+ "px";
+    div.style.height=dolzina  + "px";
+    prazen.append(div);
+
+  }
+  var brojac=0;
+  function izbrisi(kopce){
+    brojac++;
+    let vkupnoCounter=document.getElementById("vkupno");
+    vkupnoCounter.innerHTML=brojac;
+    let roditel=kopce.parentNode;
+    roditel.remove();
+  }
+  function proveriDolzSirina(){
+    let width=document.getElementById("width").value;
+    let height=document.getElementById("height").value;
+    if(width>0&&width<501 && height>0&&height<501){
+      return true;
+    }
+    return false;
+  }
+  function cena(){
+    let width=document.getElementById("width").value;
+    let height=document.getElementById("height").value;
+    let pikseli=width*height;
+    return pikseli*0.5;
+  }
+  function proveriId(){
+    let id=document.getElementById("id").value;
+    let bukvi=id.split("");
+    for(var i=0;i<bukvi.length;i++){
+      if(bukvi[i].match(/^[0-9]$/)|| bukvi[i].match(/^[A-Z]$/)){
+        return false;
+      }
+    }
+    return true;
+  }
+</script>
+</body>
+</html>

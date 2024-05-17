@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <style>
+    table {
+      border-collapse: collapse;
+    }
+
+    td {
+      width: 100px;
+      height: 100px;
+      border: 1px solid #000;
+      text-align: center;
+      vertical-align: middle;
+      cursor: pointer;
+      background: url("closed.png");
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      display: none;
+    }
+  </style>
+    <script>
+        let reversedCards = [];
+        let guesses = 0;
+        
+        function initialization() {
+            const images = ["image1.png", "image2.png", "image3.png", "image4.png", "image5.png", "image6.png", "image7.png", "image8.png"];
+            const shuffledImages = images.concat(images);
+            shuffle(shuffledImages);
+
+            for (let i = 1; i <= 4; i++) {
+                for (let j = 1; j <= 4; j++) {
+                    const cellId = i + "" + j;
+                    const imgElement = document.getElementById("image" + cellId);
+                    imgElement.src = shuffledImages.pop();
+                }
+            }
+        }
+        function shuffle(array) {
+          for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+          }
+        }
+        function reverseCard(cellId) {
+            const imgElement = document.getElementById("image" + cellId);
+
+            if (!reversedCards.includes(cellId) && reversedCards.length < 2) {
+                imgElement.style.display = "block";
+                reversedCards.push(cellId);
+
+                if (reversedCards.length === 2) {
+                    setTimeout(isMatch, 1000);
+                }
+            }
+        }
+
+        function isMatch() {
+            const [cell1, cell2] = reversedCards;
+            const img1 = document.getElementById("image" + cell1).src;
+            const img2 = document.getElementById("image" + cell2).src;
+
+            if (img1 === img2) {
+                guesses++;
+                if (guesses === 8) {
+                    alert("Congratulations!");
+                    restartGame();
+                }
+            } else {
+                document.getElementById("image" + cell1).style.display = "none";
+                document.getElementById("image" + cell2).style.display = "none";
+            }
+
+            reversedCards = [];
+        }
+
+        function restartGame() {
+            reversedCards = [];
+            guesses = 0;
+
+            for (let i = 1; i <= 4; i++) {
+                for (let j = 1; j <= 4; j++) {
+                    const cellId = i + "" + j;
+                    const imgElement = document.getElementById("image" + cellId);
+                    imgElement.style.display = "none";
+                }
+            }
+
+            initialization();
+        }
+
+        window.onload = initialization;
+    </script>
+</head>
+<body>
+<h1>Meморија</h1>
+<div style="text-align:left; float:left">
+    <table border="1">
+      <tr>
+        <td id="11" onclick="reverseCard('11')"><img src="" id="image11" /></td>
+        <td id="12" onclick="reverseCard('12')"><img src="" id="image12" /></td>
+        <td id="13" onclick="reverseCard('13')"><img src="" id="image13" /></td>
+        <td id="14" onclick="reverseCard('14')"><img src="" id="image14" /></td>
+      </tr>
+      <tr>
+        <td id="21" onclick="reverseCard('21')"><img src="" id="image21" /></td>
+        <td id="22" onclick="reverseCard('22')"><img src="" id="image22" /></td>
+        <td id="23" onclick="reverseCard('23')"><img src="" id="image23" /></td>
+        <td id="24" onclick="reverseCard('24')"><img src="" id="image24" /></td>
+      </tr>
+      <tr>
+        <td id="31" onclick="reverseCard('31')"><img src="" id="image31" /></td>
+        <td id="32" onclick="reverseCard('32')"><img src="" id="image32" /></td>
+        <td id="33" onclick="reverseCard('33')"><img src="" id="image33" /></td>
+        <td id="34" onclick="reverseCard('34')"><img src="" id="image34" /></td>
+      </tr>
+      <tr>
+        <td id="41" onclick="reverseCard('41')"><img src="" id="image41" /></td>
+        <td id="42" onclick="reverseCard('42')"><img src="" id="image42" /></td>
+        <td id="43" onclick="reverseCard('43')"><img src="" id="image43" /></td>
+        <td id="44" onclick="reverseCard('44')"><img src="" id="image44" /></td>
+      </tr>
+    </table>
+    <input type="submit" value="RESET" onclick="restartGame()"/>
+</div>
+<br/>
+</body>

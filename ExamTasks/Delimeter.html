@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Text,Delimiter</title>
+</head>
+<body>
+<div>
+    <label>Text:</label>
+    <textarea id="text"></textarea>
+</div>
+<div>
+    <label>Delimiter:</label>
+    <input type="text" id="delimiter">
+</div>
+<button onclick="create()">Create</button>
+<div id="prazen">
+
+</div>
+<script>
+    function create() {
+        let text = document.getElementById("text").value;
+        let delimiter = document.getElementById("delimiter").value;
+        let lista = text.split(delimiter);
+        for (var i = 0; i < lista.length; i++) {
+            if (lista[i].match('\n')) {
+                lista = text.split('\n');
+            }
+        }
+
+        let table = document.createElement("table");
+        let prazen = document.getElementById("prazen")
+        prazen.append(table);
+
+        let prvRed = lista[0].split(delimiter);
+        for (var i = 0; i < prvRed.length; i++) {
+            let th = document.createElement("th");
+            th.textContent=prvRed[i];
+            table.append(th);
+        }
+
+        for (var i = 1; i < lista.length; i++) {
+            let red = lista[i].split(delimiter);
+            let tr = document.createElement("tr");
+            for (var j = 0; j < red.length; j++) {
+                let td = document.createElement("td");
+                td.textContent=red[j];
+                tr.append(td);
+            }
+            tr.addEventListener("click",function (){
+                table.removeChild(tr);
+            })
+            table.append(tr);
+        }
+
+    }
+</script>
+</body>
+</html>

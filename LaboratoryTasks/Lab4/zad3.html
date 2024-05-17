@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Zad3</title>
+    <style>
+      #inputs{
+        margin-left: 90px;
+        margin-bottom: 10px;
+      }
+      #container{
+        margin-left: 10px;
+      }
+      button{
+        margin-top: 10px;
+        margin-left: 149px;
+      }
+    </style>
+</head>
+<body>
+<h1>Промена на позадина</h1>
+<div id="container">
+  <div id="inputs">
+    <input type="radio" id="radio1" name="isto">Color
+    <input type="radio" id="radio2" name="isto">Image
+  </div>
+  <div>
+    Value:<input type="text" id="value">
+  </div>
+</div>
+<button onclick="promeni()">Промени</button>
+<script>
+  function promeni(){
+    let radio1=document.getElementById("radio1");
+    let radio2=document.getElementById("radio2");
+    let value=document.getElementById("value").value;
+    let body=document.body;
+      if(radio1.checked){
+        body.style.background=value;
+    }else if(radio2.checked) {
+          body.style.backgroundImage ="url('"+value+"')";
+      }
+  }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Divovi</title>
+</head>
+<body>
+<div>
+    <input type="text" id="input">
+    <button onclick="postavi()">Постави</button>
+</div>
+<div id="empty">
+
+</div>
+<script>
+    function postavi() {
+        let input = document.getElementById("input").value;
+        let attributes = input.split(",");
+        let boja = attributes[0];
+        let sirina = parseInt(attributes[1]);
+        let visina = parseInt(attributes[2]);
+        let ime = attributes[3];
+        let empty = document.getElementById("empty");
+        let div = document.createElement("div");
+        div.style.backgroundColor = boja;
+        div.style.width = sirina + "px";
+        div.style.height = visina + "px";
+        div.style.textAlign = "center";
+        div.innerText = promeniIme(ime);
+        empty.append(div);
+    }
+
+    function promeniIme(ime) {
+        let result="";
+        for (let i=0;i<ime.length;i++) {
+            if(i%2===0){
+                result+=ime.charAt(i).toLowerCase();
+            }else{
+                result+=ime.charAt(i).toUpperCase();
+            }
+        }
+        console.log(result);
+        return result;
+    }
+</script>
+</body>
+</html>

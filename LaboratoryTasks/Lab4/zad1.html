@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Zad1</title>
+    <style>
+        #container > div {
+            text-align: right;
+            margin-bottom: 10px;
+        }
+        select {
+            width: 169px;
+            height: 22px;
+        }
+        button {
+            margin-left: 197px;
+            margin-bottom: 10px;
+        }
+        #container {
+            max-width: 600px;
+            margin-left: -350px;
+        }
+        table,tr,th,td{
+            border:1px solid black;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+<h1>Форма за внесување оцени</h1>
+<div id="container">
+    <div>
+        Име:<input type="text" id="ime">
+    </div>
+    <div>
+         Презиме:<input type="text" id="prezime">
+    </div>
+    <div>
+         Индекс:<input type="text" id="indeks">
+    </div>
+    <div>
+         Предмет:<input type="text" id="predmet">
+    </div>
+    <div>
+         Оцена:<select id="ocena">
+        <option>5(пет)</option>
+        <option>6(шест)</option>
+        <option>7(седум)</option>
+        <option>8(осум)</option>
+        <option>9(девет)</option>
+        <option>10(десет)</option>
+    </select>
+    </div>
+</div>
+<button onclick="vnesi()">Внеси</button>
+<table id="tabela">
+    <tr>
+        <th>Име</th>
+        <th>Презиме</th>
+        <th>Индекс</th>
+        <th>Предмет</th>
+        <th>Оцена</th>
+    </tr>
+</table>
+
+<script>
+    let niza=[];
+    function vnesi(){
+        let ime = document.getElementById("ime");
+        let prezime = document.getElementById("prezime");
+        let indeks = document.getElementById("indeks");
+        let predmet = document.getElementById("predmet");
+        let ocena = document.getElementById("ocena");
+
+        let objekt={
+            ime:ime.value,
+            prezime:prezime.value,
+            indeks:indeks.value,
+            predmet:predmet.value,
+            ocena:ocena.value
+        };
+        niza.push(objekt);
+
+        let tabela = document.getElementById("tabela");
+        let tr = document.createElement("tr");
+        tr.innerHTML = "<td>" + ime.value + "</td><td>" + prezime.value + "</td><td>" + indeks.value + "</td><td>" + predmet.value + "</td><td>" + ocena.value + "</td>";
+        tabela.appendChild(tr);
+
+        ime.value = "";
+        prezime.value = "";
+        indeks.value = "";
+        predmet.value = "";
+    }
+    console.log(niza);
+</script>
+</body>
+</html>

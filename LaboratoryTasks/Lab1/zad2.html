@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Zad2</title>
+</head>
+<body>
+<script>
+    var broj = prompt("Vnesi mobilen broj")
+    broj = parseInt(broj)
+    console.log(broj)
+    if (!isNaN(broj)) {
+        if (broj > 10000000 && broj < 99999999) {
+            broj = broj.toString();
+            var prvdel = broj.slice(0, 2)
+            var vtordel = broj.slice(2, 5)
+            var tretdel = broj.slice(5, 8)
+            var cel_broj = "0" + prvdel.concat("/").concat(vtordel).concat("-").concat(tretdel)
+            if (prvdel === "70" || prvdel === "71" || prvdel === "72") {
+                cel_broj = cel_broj.concat(" - T-Mobile")
+            } else if (prvdel === "75" || prvdel === "76") {
+                cel_broj = cel_broj.concat(" - One")
+            } else if (prvdel === "77" || prvdel === "78") {
+                cel_broj = cel_broj.concat(" - Vip")
+            }
+            console.log(cel_broj)
+        } else {
+            console.log("Gresen input")
+        }
+    }
+</script>
+</body>
+</html>

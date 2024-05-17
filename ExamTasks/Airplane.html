@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Zad Let</title>
+    <style>
+        input, select {
+            position: relative;
+            left: 150px;
+            top: -32px;
+        }
+
+        div {
+            margin-top: -30px;
+            margin-left: 30px;
+        }
+
+        h1 {
+            margin-bottom: 50px;
+            position: relative;
+            left: 50px;
+        }
+
+        h3,#vk{
+            margin-left: 30px;
+        }
+
+    </style>
+</head>
+<body>
+<h1>Регистрирај лет</h1>
+<div>
+    <p>Име и презиме</p>
+    <input type="text" id="ime">
+</div>
+<div>
+    <p>Ознака на летало</p>
+    <input type="text" id="oznaka">
+</div>
+<div>
+    <p>Координати на лет</p>
+    <input type="text" id="koord">
+</div>
+<div>
+    <p>Радиус на лет</p>
+    <input type="text" id="radius">
+</div>
+<div>
+    <p>Висина на лет</p>
+    <input type="text" id="visina">
+</div>
+<div>
+    <p>Тип на летало</p>
+    <select id="tip">
+        <option>Едрилица</option>
+        <option>Дрон</option>
+    </select>
+</div>
+<div>
+    <button onclick="najavi()">Најави</button>
+</div>
+<h3>Регистрирани летови</h3>
+<p id="vk">Вкупно најавени летови: <span id="vkupno">0</span></p>
+<div id="prazen">
+
+</div>
+<script>
+    var vkupno=0;
+    function najavi() {
+        vkupno++;
+        var lista = document.getElementsByTagName("input");
+        for (var i = 0; i < lista.length; i++) {
+            if (lista[i].value === "") {
+                alert("Внесете ги сите полиња");
+                return;
+            }
+        }
+        if(proveriOznaka() && proveriRadiusVisina()){
+            var span=document.getElementById("vkupno");
+            span.innerText=vkupno;
+            var lista=document.getElementById("prazen");
+            var ul=document.createElement("ul");
+            lista.append(ul);
+            var li=document.createElement("li");
+            ul.append(li);
+
+            var ime=document.getElementById("ime").value;
+            var oznaka=document.getElementById("oznaka").value;
+            var radius=document.getElementById("radius").value;
+            var visina=document.getElementById("visina").value;
+            var tip=document.getElementById("tip").value;
+
+            li.innerHTML="<p>"+ime+", "+oznaka+"</p>"+"<p>Радиус:"+radius+", Висина:"+visina+"</p>"+"<p>"+tip+"</p>"+
+                "<button onclick='potvrdi(this)'>Потврди</button>"+"<button onclick='izbrisi2(this)'>Избриши</button>";
+
+            if(tip==="Едрилица"){
+                li.style.border="1px solid black";
+            }
+            if(tip==="Дрон"){
+                if(radius===visina){
+                    li.style.border="1px solid black";
+                }
+            }
+            li.style.marginRight="570px";
+            li.style.padding="10px 20px 10px 20px";
+            li.style.marginTop="30px";
+        }
+
+        izbrisi();
+    }
+    function izbrisi2(button){
+        var roditel=button.parentNode;
+        roditel.remove();
+        vkupno--;
+        document.getElementById("vkupno").innerHTML=vkupno.toString();
+
+    }
+    function potvrdi(button){
+        var roditel=button.parentNode;
+        roditel.style.background="lightgreen";
+    }
+    function proveriRadiusVisina() {
+        var oznaka = document.getElementById("oznaka").value;
+        var flag = 1;
+        oznaka = oznaka.toString();
+        var brojki = oznaka.slice(-4);
+        for (var i = 0; i < brojki.length; i++) {
+            if (brojki[0] !== brojki[i]) {
+                flag = 0;
+            }
+        }
+        var radius = document.getElementById("radius").value;
+        var visina = document.getElementById("visina").value;
+        if (flag === 0) {
+            if (radius > 500 && visina > 150) {
+                alert("Висината и радиусот се над дозволеното!");
+                return;
+            }
+        }
+        return true;
+    }
+
+    function proveriOznaka() {
+        var oznaka = document.getElementById("oznaka").value;
+        const konstantna = /^Z3-UNR-\d{4}/;
+        if (!oznaka.match(konstantna)) {
+            alert("Внесете валиден внез за ознака");
+            return;
+        } else {
+            return true;
+        }
+    }
+
+    function izbrisi() {
+        var lista = document.getElementsByTagName("input");
+        for (var i = 0; i < lista.length; i++) {
+            lista[i].value = "";
+        }
+    }
+</script>
+</body>
+</html>

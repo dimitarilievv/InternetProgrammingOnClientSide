@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Zad4</title>
+</head>
+<body>
+<script>
+  let library = [
+    {
+      author: 'J.R.R. Tolkien',
+      title: 'The Hobbit',
+      readingStatus: true
+    },
+    {
+      author: 'J.R.R. Tolkien',
+      title: 'The Lord of the Rings',
+      readingStatus: false
+    }
+    ];
+
+  for(let i=0;i<library.length;i++){
+    let book="'"+library[i].title+"' by "+library[i].author+".";
+    if(library[i].readingStatus){
+      console.log("You already read "+book);
+    }else{
+      console.log("You still need to read "+book);
+    }
+  }
+</script>
+</body>
+</html>

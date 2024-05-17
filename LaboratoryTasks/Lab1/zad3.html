@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Zad 3</title>
+</head>
+<body>
+<script>
+    var string1 = prompt("Vnesi prv string")
+    var string2 = prompt("Vnesi vtor string")
+    var string3 = prompt("Vnesi tret string")
+    var max = 0, index = 0
+    var array1 = (string1.concat(" ").concat(string2).concat(" ").concat(string3)).split(" ")
+    for (var i = 0; i < array1.length; i++) {
+        var size = array1[i].length
+        if (size > max) {
+            max = size;
+            index = i;
+        }
+    }
+    alert(array1[index])
+
+</script>
+</body>
+</html>

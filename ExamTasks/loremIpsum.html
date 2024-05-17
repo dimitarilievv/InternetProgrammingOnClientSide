@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LoremIpsum</title>
+</head>
+<body>
+<div>
+    <p id="paragraf">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+        pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
+        laborum</p>
+</div>
+<div>
+    color<select id="color" onchange="promena1()"></select>
+    width<select id="width" onchange="promena2()"></select>
+    background-color<select onchange="promena3()" id="background-color"></select>
+</div>
+</body>
+<script>
+    let data = '[{"name":"color", "options":["red", "blue", "green", "#FF00FF"]},' +
+        '{"name":"width", "options":["100px", "200px", "600px"]},' +
+        '{"name":"background-color", "options":["yellow", "black", "pink"]}]';
+    data = JSON.parse(data);
+    for (let i = 0; i < data.length; i++) {
+        if (data[i].name === "color") {
+            let option1 = document.createElement("option")
+            let option2 = document.createElement("option")
+            let option3 = document.createElement("option")
+            let option4 = document.createElement("option")
+            option1.innerText = data[i].options[0];
+            option2.innerText = data[i].options[1];
+            option3.innerText = data[i].options[2];
+            option4.innerText = data[i].options[3];
+
+            document.getElementById("color").append(option1);
+            document.getElementById("color").append(option2);
+            document.getElementById("color").append(option3);
+            document.getElementById("color").append(option4);
+        } else if (data[i].name === "width") {
+            let option1 = document.createElement("option")
+            let option2 = document.createElement("option")
+            let option3 = document.createElement("option")
+
+            option1.innerText = data[i].options[0];
+            option2.innerText = data[i].options[1];
+            option3.innerText = data[i].options[2];
+
+            document.getElementById("width").append(option1);
+            document.getElementById("width").append(option2);
+            document.getElementById("width").append(option3);
+        } else if (data[i].name === "background-color") {
+            let option1 = document.createElement("option")
+            let option2 = document.createElement("option")
+            let option3 = document.createElement("option")
+
+            option1.innerText = data[i].options[0];
+            option2.innerText = data[i].options[1];
+            option3.innerText = data[i].options[2];
+
+            document.getElementById("background-color").append(option1);
+            document.getElementById("background-color").append(option2);
+            document.getElementById("background-color").append(option3);
+        }
+    }
+
+    function promena1() {
+        let color=document.getElementById("color").value;
+        let p=document.getElementById("paragraf");
+        p.style.color=color;
+    }
+
+    function promena2() {
+      let width=document.getElementById("width").value;
+      let p=document.getElementById("paragraf");
+      p.style.width=width;
+    }
+
+    function promena3() {
+      let bc=document.getElementById("background-color").value;
+      let p=document.getElementById("paragraf");
+      p.style.backgroundColor=bc;
+    }
+</script>
+</html>

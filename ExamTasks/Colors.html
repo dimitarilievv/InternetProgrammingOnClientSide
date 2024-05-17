@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Boi</title>
+    <style>
+        body {
+            width: 2000px;
+            height: 2000px;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+<div>
+    <textarea id="textarea"></textarea>
+</div>
+<div>
+    <button onclick="prikazi(this)">Прикажи</button>
+</div>
+<script>
+    let nizaBoi = [];
+
+    function prikazi(kopce) {
+        var area = document.getElementById("textarea");
+        var parts = area.value.split(/\s+/);
+        nizaBoi = parts;
+        console.log(nizaBoi);
+        let counter = 0;
+        let izminatiZborovi = [];
+        let index = 0; // Keep track of the current word index
+
+        function displayNextWord() {
+            if (index < nizaBoi.length) {
+                let currentWord = nizaBoi[index];
+                if (!izminatiZborovi.includes(currentWord)) {
+                    counter = 0;
+                    for (let j = 0; j < nizaBoi.length; j++) {
+                        if (currentWord === nizaBoi[j]) {
+                            counter++;
+                        }
+                    }
+                    var zbor = document.createElement("p");
+                    zbor.innerHTML = currentWord;
+                    zbor.style.fontSize = 10 + counter * 30 + "px";
+                    zbor.style.position = "absolute";
+                    zbor.style.left = Math.random() * window.innerWidth + "px";
+                    zbor.style.top = Math.random() * window.innerHeight + "px";
+                    zbor.style.color = getRandomColor();
+                    document.body.append(zbor);
+                    izminatiZborovi.push(currentWord);
+
+                    zbor.classList.add("fade-in");
+
+                    // Increment the index for the next word
+                    index++;
+
+                    // Use setTimeout to add a delay before displaying the next word
+                    setTimeout(displayNextWord, 500); // Adjust the delay as needed
+                } else {
+                    // If the word is already displayed, move to the next one
+                    index++;
+                    displayNextWord();
+                }
+            } else {
+                // Remove the button and textarea after displaying all words
+                let roditel = kopce.parentNode;
+                roditel.remove();
+                area.remove();
+            }
+        }
+
+        // Start displaying words
+        displayNextWord();
+    }
+
+    function getRandomColor() {
+        let letters = "0123456789ABCDEF";
+        let color = "#";
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+</script>
+</body>
+</html>

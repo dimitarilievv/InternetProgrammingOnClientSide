@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <style>
+    input{
+      width: 80px;
+        margin-bottom: 5px;
+    }
+    #text{
+        width: 200px;
+        margin-top: 10px;
+    }
+    .fadein{
+        opacity: 0;
+        animation:fadeIn ease-in 1s forwards;
+    }
+    .fadeout{
+        animation:fadeOut ease-out 1s;
+    }
+    @keyframes fadeIn {
+        from{
+            opacity: 0;
+        }
+        to{
+            opacity: 1;
+        }
+    }
+    @keyframes fadeOut {
+        from{
+            opacity: 1;
+        }
+        to{
+            opacity: 0;
+        }
+    }
+  </style>
+</head>
+<body>
+<div>
+  Red:<input type="number" id="red" placeholder="0-255">(0-255)
+</div>
+<div>
+  Green:<input type="number" id="green" placeholder="0-255">(0-255)
+</div>
+<div>
+  Blue:<input type="number" id="blue" placeholder="0-255">(0-255)
+</div>
+<div>
+    <div>
+        <input type="radio" name="same" id="start">Start
+    </div>
+   <div>
+       <input type="radio" name="same" id="end">End
+   </div>
+</div>
+<div>
+    Text:<input type="text" id="text">
+</div>
+<div>
+    <button onclick="add()">Add</button>
+    <button onclick="izbrisi()">Delete</button>
+</div>
+<div id="empty">
+
+</div>
+<script>
+    let empty=document.getElementById("empty");
+    function add(){
+        let red=parseInt(document.getElementById("red").value);
+        let green=parseInt(document.getElementById("green").value);
+        let blue=parseInt(document.getElementById("blue").value);
+        if(red<0||red>255||green<0||green>255||blue<0||blue>255){
+            alert("Nevaliden broj za boja!");
+            return;
+        }
+        let radio1=document.getElementById("start");
+        let radio2=document.getElementById("end");
+        let text=document.getElementById("text").value;
+        let p=document.createElement("p");
+        p.innerText=text;
+        p.style.color="rgb("+red+","+green+","+blue+")";
+        p.classList.add("fadein");
+        if(radio1.checked){
+            empty.prepend(p);
+        }else if(radio2.checked){
+            empty.appendChild(p);
+        }
+        document.getElementById("text").value="";
+    }
+    function izbrisi(){
+        let radio1=document.getElementById("start");
+        let radio2=document.getElementById("end");
+        if(radio1.checked){
+            document.querySelector("#empty>p:first-child").classList.add("fadeout");
+            document.querySelector("#empty>p:first-child").addEventListener("animationend", function () {
+                empty.removeChild(firstChild);
+            });
+        }else if(radio2.checked){
+            document.querySelector("#empty>p:last-child").classList.add("fadeout");
+            document.querySelector("#empty>p:last-child").addEventListener("animationend", function () {
+                empty.removeChild(lastChild);
+            });
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Zad2</title>
+</head>
+<body>
+<script>
+    console.log(remove_array_element([2, 5, 9, 6], 5));
+    // [2, 9, 6]
+    console.log(remove_array_element([1, 52, 119, 3], 1));
+    function remove_array_element(list,element){
+        let temp=[],k=0;
+        for (let i = 0; i < list.length; i++) {
+            if(list[i]!==element){
+                temp[k++]=list[i];
+            }
+        }
+        return temp;
+    }
+
+</script>
+</body>
+</html>

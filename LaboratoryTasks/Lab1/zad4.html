@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Zad 4</title>
+</head>
+<body>
+<p>Tezina</p>
+<input type="number" id="tezina">
+<p>Visina</p>
+<input type="number" id="visina">
+<button onclick="calculator()">Calculate</button>
+<script>
+    function calculator() {
+        var tez = parseFloat(document.getElementById("tezina").value)
+        var vis = parseFloat(document.getElementById("visina").value)
+        vis = vis / 100
+        alert((tez / (vis * vis)).toFixed(1))
+    }
+</script>
+</body>
+</html>

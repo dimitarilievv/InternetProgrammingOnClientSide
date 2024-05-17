@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        tr, td, table {
+            border: 1px solid black;
+            border-collapse: collapse;
+            text-align: center;
+            padding: 10px;
+            margin-top: 120px;
+            margin-left: 80px;
+            font-size: 25px;
+            background-color: whitesmoke;
+        }
+
+        #container {
+            display: flex;
+            flex-direction: row;
+        }
+        img{
+            width: 350px;
+            height: 400px;
+            margin-left: 60px;
+
+        }
+        #keyboard{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        #empty{
+                margin-top: 80px;
+                margin-left:60px;
+        }
+        #empty p {
+            vertical-align: top;
+        }
+        body{
+            font-size: 40px;
+            background-color: lightblue;
+        }
+        .fadeIn{
+            opacity: 1;
+            animation: fadeIN 2s ease-in-out forwards;
+        }
+        @keyframes fadeIN {
+            from{
+                opacity: 0;
+            }
+            to{
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <div>
+        <div>
+            <img src="img1.gif" id="slika">
+        </div>
+    </div>
+    <div id="keyboard">
+        <div id="empty">
+
+        </div>
+        <div>
+            <table>
+                <tr>
+                    <td onclick="checkLetter(this)">A</td>
+                    <td onclick="checkLetter(this)">B</td>
+                    <td onclick="checkLetter(this)">C</td>
+                    <td onclick="checkLetter(this)">D</td>
+                    <td onclick="checkLetter(this)">E</td>
+                    <td onclick="checkLetter(this)">F</td>
+                    <td onclick="checkLetter(this)">G</td>
+                    <td onclick="checkLetter(this)">H</td>
+                    <td onclick="checkLetter(this)">I</td>
+                    <td onclick="checkLetter(this)">J</td>
+                    <td onclick="checkLetter(this)">K</td>
+                    <td onclick="checkLetter(this)">L</td>
+                    <td onclick="checkLetter(this)">M</td>
+                </tr>
+                <tr>
+                    <td onclick="checkLetter(this)">N</td>
+                    <td onclick="checkLetter(this)">O</td>
+                    <td onclick="checkLetter(this)">P</td>
+                    <td onclick="checkLetter(this)">Q</td>
+                    <td onclick="checkLetter(this)">R</td>
+                    <td onclick="checkLetter(this)">S</td>
+                    <td onclick="checkLetter(this)">T</td>
+                    <td onclick="checkLetter(this)">U</td>
+                    <td onclick="checkLetter(this)">V</td>
+                    <td onclick="checkLetter(this)">W</td>
+                    <td onclick="checkLetter(this)">X</td>
+                    <td onclick="checkLetter(this)">Y</td>
+                    <td onclick="checkLetter(this)">Z</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    let data = '["casa", "otorinolaringologija","pitagora", "katedra", "bunela", "mrava", "vinozito", "krava", "bukva","jazik","vokal","misla","tablo","crevo","macka","maslo","pesto","testo","bazen","maska","kopce","krokodil", "tasna", "kiko", "stol", "lale", "amsterdam", "ogledalo", "slagalica", "neta", "kapa", "mece", "krpa", "cesel"]';
+    let sliki=["img2.gif","img3.gif","img4.gif","img5.gif","img5_1.gif","img6.gif","img7.gif"];
+    let kojaSlika=0;
+    let pobeda="img8.gif";
+    let izguba="img7.gif"
+    data = JSON.parse(data);
+    let randomIndex = Math.floor(Math.random() * data.length);
+    let randomZbor = data[randomIndex];
+    console.log(randomZbor);
+    let empty = document.getElementById("empty");
+    for (let i = 0; i < randomZbor.length; i++) {
+        let p = document.createElement("p");
+        p.style.width = "40px";
+        p.style.height = "40px";
+        p.style.borderBottom = "1px solid black";
+        p.style.display = "inline-block";
+        p.style.marginLeft = "20px";
+        empty.append(p);
+    }
+    let counter=0;
+    let zavrsiIgra=false;
+    function checkLetter(cell){
+        let bukva=cell.innerText.charAt(0).toLowerCase();
+        let imaBukva=false;
+
+        for (let i = 0; i < randomZbor.length; i++) {
+            if(randomZbor.charAt(i)===bukva){
+                if(zavrsiIgra===true){
+                    return;
+                }
+                counter++;
+                imaBukva=true;
+                cell.style.backgroundColor="lightgreen";
+                let pole =document.getElementById("empty").children[i];
+                pole.innerText=randomZbor.charAt(i);
+                pole.classList.add("fadeIn");
+            }
+        }
+        if(counter===randomZbor.length){
+            zavrsiIgra=true;
+            let slika=document.getElementById("slika");
+            slika.src=pobeda;
+        }
+
+        if(imaBukva===false &&zavrsiIgra===false){
+            if(kojaSlika>=sliki.length){
+                let slika=document.getElementById("slika");
+                slika.src=izguba;
+                zavrsiIgra=true;
+                alert("IZGUBI NEMISH POJMA!");
+                return;
+            }else{
+                cell.style.backgroundColor="lightgray";
+                setTimeout(()=>{
+                    let slika=document.getElementById("slika");
+                    slika.src=sliki[kojaSlika++];
+                },500);
+            }
+
+
+
+        }
+
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <p id="prazen"></p>
+    <input type="text" id="vnes">
+    <button onclick="proveri()">Провери</button>
+</div>
+<div>
+    Преостанато време <span id="sekundi">60</span> секунди. Погодоци <span id="pogodok">0</span>.
+</div>
+<script>
+    var azbuka = ["А", "Б", "В", "Г", "Д", "Ѓ", "Е", "Ж", "З", "Ѕ", "И", "Ј", "К", "Л", "Љ", "М", "Н", "Њ", "О", "П", "Р", "С", "Т", "Ќ", "У", "Ф", "Х", "Ц", "Ч", "Џ", "Ш"];
+    let prazenn = document.getElementById("prazen");
+    var sekundi=60;
+    let vreme=document.getElementById("sekundi");
+    let nizaPogodici=[];
+    let teciVreme=setInterval(() => {
+        vreme.innerText=sekundi--;
+    },1000);
+    setTimeout(() => {
+        clearInterval(teciVreme);
+        location.reload();
+    }, 60000);
+    var goreBukvi = [];
+    for (let i = 0; i < 10; i++) {
+        let bukva = document.createElement("span");
+        let randomIndex = Math.floor(Math.random() * azbuka.length);
+        bukva.innerText = azbuka[randomIndex] + " ";
+        goreBukvi.push(azbuka[randomIndex]);
+        prazenn.append(bukva);
+    }
+    // console.log(goreBukvi);
+    let pogodoci = 0;
+
+
+    function proveri() {
+        let data = '["јас", "ти","тој", "таа", "тоа", "ние", "вие", "тие"]';
+        data = JSON.parse(data);
+        let vnes = document.getElementById("vnes").value;
+        for (let i = 0; i < vnes.length; i++) {
+            if (!goreBukvi.includes(vnes[i].toUpperCase())) {
+                alert("Zborot ne e sostaven od bukvite gore!");
+                return;
+            }
+        }
+        if (data.includes(vnes)) {
+            if(nizaPogodici.includes(vnes)){
+                alert("vnesi drug zbor,ovoj go pogodi veke!");
+                return;
+            }
+            nizaPogodici.push(vnes);
+            pogodoci++;
+            let pogodok = document.getElementById("pogodok");
+            pogodok.innerText = pogodoci;
+        }
+
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Zad 2</title>
+</head>
+<body>
+<button onclick="prikaziSlika()">Click</button>
+<div id="prazen">
+
+</div>
+<script>
+  function prikaziSlika(){
+      let div=document.getElementById("prazen");
+    let random=Math.floor(Math.random()*3);
+    if(random==0){
+        div.innerHTML="<img src='https://designmodo.com/wp-content/uploads/2014/07/free-photos.jpg'>"
+    }else if(random==1){
+        div.innerHTML="<img src='https://farm5.staticflickr.com/4060/4567292488_5d3f4b05f6_z.jpg'>"
+    }else{
+        div.innerHTML="<img src='https://wallup.net/wp-content/uploads/2017/03/28/401266-landscape-road-forest-748x421.jpg'>"
+    }
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Zad 1</title>
+</head>
+<body>
+<script>
+    //1 1 2 2 3 4 5 5
+    //1 2 3 4 5
+    function deleteDuplicates(list) {
+        let tempList = [];
+        for (let i = 0; i < list.length; i++) {
+            let temp = list[i];
+            if (tempList.indexOf(temp)===-1) {
+                tempList.push(temp);
+            }
+        }
+        return tempList;
+    }
+
+    console.log(deleteDuplicates([1, 1, 2, 2, 3, 4, 5, 5]));
+    console.log(deleteDuplicates([1, 2, 2, 3, 3, 5, 10]));
+    console.log(deleteDuplicates([1, 1, 1, 1, 1, 1, 1]));
+</script>
+</body>
+</html>

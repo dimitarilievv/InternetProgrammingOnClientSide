@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prv kolokv tret termin 22/23</title>
+    <style>
+        input, select {
+            position: relative;
+            left: 170px;
+            top: -34px;
+        }
+
+        div {
+            margin-top: -30px;
+        }
+
+        h1 {
+            margin-bottom: 60px;
+        }
+
+        h2 {
+            margin-bottom: 40px;
+        }
+
+        input {
+            width: 250px;
+        }
+
+        table, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            align-content: center;
+            padding-left: 10px;
+            padding-right: 10px;
+            vertical-align: top;
+        }
+
+    </style>
+</head>
+<body>
+<h1>Online classes</h1>
+<div>
+    <p>Name and surname</p>
+    <input type="text" id="name">
+</div>
+<div>
+    <p>Email</p>
+    <input type="text" id="email">
+</div>
+<div>
+    <p>Age</p>
+    <input type="text" id="age">
+</div>
+<div>
+    <p>Username</p>
+    <input type="text" id="username">
+</div>
+<div>
+    <p>Password</p>
+    <input type="password" id="pass">
+</div>
+<div>
+    <p>Role</p>
+    <select id="role">
+        <option>teacher</option>
+        <option>student</option>
+    </select>
+</div>
+<button onclick="add()">Add</button>
+<p>Available teachers:<span id="brojac">0</span></p>
+<h2>Users</h2>
+<div id="prazen">
+    <table id="table">
+        <tr id="red">
+            <td>Name</td>
+            <td>Username</td>
+            <td>Email</td>
+            <td>Age</td>
+            <td>Role</td>
+            <td>Actions</td>
+        </tr>
+    </table>
+
+</div>
+<script>
+    var listaUsername = [];
+    var brojac=0;
+    function add() {
+        let name = document.getElementById("name").value;
+        let email = document.getElementById("email").value;
+        let age = document.getElementById("age").value;
+        let username = document.getElementById("username").value;
+        let pass = document.getElementById("pass").value;
+        let role = document.getElementById("role").value;
+        // listaUsername.unshift(name);
+        // console.log(listaUsername);
+        if (!(name && email && age && username && pass && role)) {
+            alert("Vnesi gi site polinja!");
+            return;
+        }
+        if (!proverkaLozika()) {
+            alert("Vnesi tocen format na lozinka");
+            return;
+        }
+        if (listaUsername.includes(username)) {
+            alert("Korisnickoto ime e zafateno");
+            return;
+        }
+        listaUsername.push(username);
+        if (proverkaLozika() && proveriGodini()) {
+            let pole = document.getElementById("table");
+            let redNov = document.createElement("tr");
+            if(role === "teacher"){
+                redNov.innerHTML = "<td>" + name + "</td><td>" + username + "</td><td>" + email + "</td><td>" + age + "</td>" +
+                    "<td>" + role + "</td><td><button id='kopce' onclick='izbrisiKopce(this)'>Hire</button></td>";
+                pole.append(redNov);
+                redNov.style.background = "lightgreen";
+                brojac++;
+            }else{
+                redNov.innerHTML = "<td>" + name + "</td><td>" + username + "</td><td>" + email + "</td><td>" + age + "</td>" +
+                    "<td>" + role + "</td><td></td>";
+                pole.append(redNov);
+                redNov.style.background = "lightblue";
+            }
+
+        }
+       let teacherAvailb=document.getElementById("brojac");
+       teacherAvailb.innerHTML=brojac;
+
+    }
+
+    function izbrisiKopce(kopce) {
+        brojac--;
+        let teacherAvailb=document.getElementById("brojac");
+        teacherAvailb.innerHTML=brojac;
+        let red = kopce.parentNode.parentNode;
+        red.style.background = "lightgray";
+        kopce.parentNode.removeChild(kopce);
+    }
+
+
+    function proveriGodini() {
+        let age = document.getElementById("age").value;
+        let role = document.getElementById("role").value;
+        if (parseInt(age) < 18 && role === "teacher") {
+            return false;
+        }
+        return true;
+    }
+
+    function proverkaLozika() {
+        let pass = document.getElementById("pass").value;
+        if (pass.length >= 10) {
+            let lista = pass.split("");
+            let br = br2 = 0;
+            for (var i = 0; i < lista.length; i++) {
+                if (lista[i].match(/^[A-Z]$/)) {
+                    br++;
+                }
+                if (lista[i].match(/^[0-9]$/)) {
+                    br2++;
+                }
+            }
+            if (br >= 1 && br2 >= 1) {
+                return true;
+            }
+        }
+        return false;
+    }
+</script>
+</body>
+</html>

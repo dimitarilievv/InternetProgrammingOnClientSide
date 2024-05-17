@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Zad1-Palindrom</title>
+</head>
+<body>
+<script>
+    var broj = prompt("Vnesi cetricifren broj")
+    broj = parseInt(broj)
+    console.log(broj)
+    if (!isNaN(broj)) {
+        var temp = broj
+        var brCifri = 0
+        var sum = 0
+        while (temp != 0) {
+            brCifri += 1
+            sum += Math.floor(temp % 10)
+            temp = Math.floor(temp / 10)
+        }
+        if (brCifri == 4) {
+            if ((Math.floor(broj % sum) === 0) && (Math.floor(broj % 10) === Math.floor(broj / 1000)) && (Math.floor(broj / 10 % 10) === Math.floor(broj / 100 % 10))) {
+                alert("se deli i e palindrom")
+            } else {
+                alert("ne gi ispolnuva uslovite")
+            }
+        } else {
+            alert("Ne moze da se proveri brojot")
+        }
+
+    }
+</script>
+</body>
+</html>

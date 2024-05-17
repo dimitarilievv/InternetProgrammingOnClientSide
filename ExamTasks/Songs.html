@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mix pesni</title>
+    <style>
+        body {
+            background-color: blueviolet;
+        }
+        td{
+          text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div>
+    Get<input type="number" style="width: 30px" id="broj">songs
+    <button onclick="mix()">Mix</button>
+    <select id="select">
+        <option>all</option>
+        <option>Pop</option>
+        <option>Rock</option>
+        <option>Blues</option>
+    </select>
+</div>
+<div>
+    <table id="table">
+        <tr>
+            <th>id</th>
+            <th>artist</th>
+            <th>title</th>
+            <th>genre</th>
+            <th>releaseYear</th>
+            <th>move</th>
+        </tr>
+    </table>
+</div>
+<script>
+    data = '[{"artist":"Marc", "title":"TheWorks", "genre":"Pop", "releaseYear":"2022"}, {"artist":"James", "title":"Jinx", "genre":"Rock", "releaseYear":"2021"},{"artist":"Jayne", "title":"Roll", "genre":"Blues", "releaseYear":"2023"},{"artist":"Alfie", "title":"MegaGiga", "genre":"Pop", "releaseYear":"2019"},{"artist":"Rick", "title":"Extract", "genre":"Rock", "releaseYear":"2028"},{"artist":"William", "title":"Extract", "genre":"Blues", "releaseYear":"2026"}]';
+    data = JSON.parse(data);
+
+    function mix() {
+
+        let brojPesni = parseInt(document.getElementById("broj").value);
+        let select = document.getElementById("select").value;
+        let table = document.getElementById("table");
+        table.innerHTML="";
+        table.innerHTML = '<thead><tr><th>id</th><th>artist</th><th>title</th><th>genre</th><th>releaseYear</th><th>move</th></tr></thead>';
+        if(brojPesni>data.length){
+          brojPesni=data.length;
+        }
+
+        if (select === "all") {
+          for (let i = 0; i < brojPesni; i++) {
+            let tr=document.createElement("tr");
+                tr.innerHTML="<td>"+napraviId(i)+"</td><td>"+data[i].artist+"</td><td>"+data[i].title+"</td>" +
+                        "<td>"+data[i].genre+"</td><td>"+data[i].releaseYear+"</td><td><button onclick='moveUp(this)'>UP</button><button onclick='moveDown(this)'>DOWN</button></td>"
+                table.append(tr);
+            }
+        }else if(select==="Pop"){
+          for (let i = 0; i < brojPesni; i++) {
+            let tr=document.createElement("tr");
+            if(data[i].genre==="Pop"){
+              tr.innerHTML="<td>"+napraviId(i)+"</td><td>"+data[i].artist+"</td><td>"+data[i].title+"</td>" +
+                      "<td>"+data[i].genre+"</td><td>"+data[i].releaseYear+"</td><td><button onclick='moveUp(this)'>UP</button><button onclick='moveDown(this)'>DOWN</button></td>"
+              table.append(tr);
+            }
+          }
+        }else if(select==="Rock"){
+          for (let i = 0; i < brojPesni; i++) {
+            let tr=document.createElement("tr");
+            if(data[i].genre==="Rock"){
+              tr.innerHTML="<td>"+napraviId(i)+"</td><td>"+data[i].artist+"</td><td>"+data[i].title+"</td>" +
+                      "<td>"+data[i].genre+"</td><td>"+data[i].releaseYear+"</td><td><button onclick='moveUp(this)'>UP</button><button onclick='moveDown(this)'>DOWN</button></td>"
+              table.append(tr);
+            }
+          }
+        }else if(select==="Blues"){
+          for (let i = 0; i < brojPesni; i++) {
+            let tr=document.createElement("tr");
+            if(data[i].genre==="Blues"){
+              tr.innerHTML="<td>"+napraviId(i)+"</td><td>"+data[i].artist+"</td><td>"+data[i].title+"</td>" +
+                      "<td>"+data[i].genre+"</td><td>"+data[i].releaseYear+"</td><td><button onclick='moveUp(this)'>UP</button><button onclick='moveDown(this)'>DOWN</button></td>"
+              table.append(tr);
+            }
+          }
+        }
+    }
+    function napraviId(i){
+      let artist=data[i].artist;
+      let title=data[i].title;
+      //Marc TheWorks MTW
+      let spoeno="";
+      for (let j = 0; j < artist.length; j++) {
+        if(artist.charAt(j).match(/^[A-Z]$/)){
+          spoeno+=artist.charAt(j);
+        }
+      }
+      for (let j = 0; j < title.length; j++) {
+        if(title.charAt(j).match(/^[A-Z]$/)){
+          spoeno+=title.charAt(j);
+        }
+      }
+    return spoeno;
+    }
+
+    function moveUp(button) {
+      let row = button.parentNode.parentNode;
+      if (row.rowIndex > 0) {
+        row.parentNode.insertBefore(row, row.previousSibling);
+      }
+    }
+
+    function moveDown(button) {
+      let row = button.parentNode.parentNode;
+      if (row.rowIndex < row.parentNode.rows.length-1) {
+        row.parentNode.insertBefore(row.nextSibling, row);
+      }
+    }
+</script>
+</body>
+</html>

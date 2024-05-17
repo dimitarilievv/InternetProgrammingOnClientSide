@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>zad2</title>
+    <script>
+        let randomBroj = Math.floor(Math.random()*9000)+1000;
+        // let randomBroj=9457;
+        console.log(randomBroj);
+        function pogodi() {
+            let vnesenBroj = parseInt(document.getElementById("guess").value);
+            let brObidi = parseInt(document.getElementById("brObidi").innerHTML);
+
+            if (brObidi === 10) {
+                alert("Не го погодивте бројот. Бараниот број е " + randomBroj);
+                odPocetok();
+                return;
+            } else {
+                if(randomBroj === vnesenBroj){
+                    alert("Честитки, го погодивте бројот.");
+                    odPocetok();
+                }
+                else{
+                    let cifriNaRandom = intoArrOfDigits(randomBroj);
+                    let cifriNaVnesen = intoArrOfDigits(vnesenBroj);
+                    let tocniMesta = 0;
+                    let tocniCifri = 0;
+                    for (let i = 0; i < 4; i++) {
+                        if (cifriNaVnesen.includes(cifriNaRandom[i])) {
+                            tocniCifri++;
+                            if (cifriNaVnesen.indexOf(cifriNaRandom[i]) === i) {
+                                tocniMesta++;
+                            }
+                        }
+                    }
+                    document.getElementById("brObidi").innerHTML = "" + (brObidi + 1);
+                    let prikaz = document.getElementById("prikaz");
+                    let poraka = document.createElement("p");
+                    poraka.innerHTML = "Има " + tocniCifri + ", на место " + tocniMesta + " "+vnesenBroj;
+                    prikaz.appendChild(poraka);
+                }
+            }
+        }
+
+        function intoArrOfDigits(number) {
+            let cifri = [];
+            cifri.push(Math.floor(number / 1000));
+            cifri.push(Math.floor((number / 100) % 10));
+            cifri.push(Math.floor((number / 10) % 10));
+            cifri.push(number % 10);
+            return cifri;
+        }
+        function odPocetok() {
+            randomBroj = Math.floor(Math.random()*9000)+1000;
+            document.getElementById("brObidi").innerHTML="0";
+            document.getElementById("prikaz").innerHTML="";
+            document.getElementById("guess").value="";
+        }
+    </script>
+</head>
+<body>
+<div>
+    <div style="text-align:right; float:left">
+        <label id="obid">Обиди <span id="brObidi">0</span></label>
+        <p>Погодок: <input id="guess" style="width:150px"/></p>
+        <button onclick="pogodi()">Погоди</button>
+        <button onclick="odPocetok()">Од почеток</button>
+    </div>
+</div>
+<br/>
+<div id="prikaz" style="clear: both"></div>
+</body>
+</html>

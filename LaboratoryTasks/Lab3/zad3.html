@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Zad3</title>
+</head>
+<body>
+<script>
+    //SO KLASA
+    class Cilindar{
+        constructor(radius,visina) {
+            this.radius=radius;
+            this.visina=visina;
+        }
+        presmetajVolumen(){
+            return Math.PI*this.radius*this.radius*this.visina;
+        }
+    }
+    //SO PROTOTIP
+    // function Cilindar(radius,visina){
+    //     this.radius=radius;
+    //     this.visina=visina;
+    // }
+    // Cilindar.prototype.presmetajVolumen=function (){
+    //   return Math.PI*this.radius*this.radius*this.visina;
+    // };
+    var c1=new Cilindar(5,10);
+    console.log(c1.presmetajVolumen().toFixed(2));
+
+    var c2=new Cilindar(2,8);
+    console.log(c2.presmetajVolumen().toFixed(2));
+</script>
+</body>
+</html>

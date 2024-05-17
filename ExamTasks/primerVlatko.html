@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Online shop</title>
+    <style>
+        input, select {
+            position: relative;
+            top: -35px;
+            left: 180px;
+        }
+        div {
+            margin-bottom: -30px;
+        }
+        #prazen{
+          display:flex;
+          flex-direction: row;
+        }
+        table,th,tr,td{
+          border: 1px solid black;
+          border-collapse: collapse;
+          margin-right: 20px;
+        }
+
+    </style>
+</head>
+<body>
+<h1>Online shop</h1>
+<div>
+    <p>Name and surname</p>
+    <input type="text" id="name">
+</div>
+<div>
+    <p>Item</p>
+    <input type="text" id="item">
+</div>
+<div>
+    <p>Item code</p>
+    <input type="text" id="code">
+</div>
+<div>
+    <p>Item descriptiom</p>
+    <input type="text" id="desc">
+</div>
+<div>
+    <p>Price</p>
+    <input type="text" id="price">
+</div>
+<div>
+    <p>Used</p>
+    <select id="select">
+        <option>used</option>
+        <option>never-used</option>
+    </select>
+</div>
+<button onclick="addItem()">Add</button>
+<p>Active items:<span id="active">0</span></p>
+<div id="prazen">
+  <div>
+    <h3>Unused items</h3>
+    <table id="tabelaUnused">
+      <th>Name</th>
+      <th>item</th>
+      <th>Price</th>
+      <th>Code</th>
+      <th>Number</th>
+      <th>Actions</th>
+    </table>
+  </div>
+  <div>
+    <h3>Used items</h3>
+    <table id="tabelaUsed">
+      <th>Name</th>
+      <th>item</th>
+      <th>Price</th>
+      <th>Code</th>
+      <th>Number</th>
+      <th>Actions</th>
+    </table>
+  </div>
+</div>
+<script>
+  let brojac=0;
+  let listaUsed=[];
+  let listaUnused=[];
+  function addItem(){
+
+    let name=document.getElementById("name").value;
+    let item=document.getElementById("item").value;
+    let price=document.getElementById("price").value;
+    let code=document.getElementById("code").value;
+    let desc=document.getElementById("desc").value;
+    let select=document.getElementById("select").value;
+    if(!(name&&item&&price&&code&&desc&&select)){
+      alert("Ne se vneseni site polinja");
+      return;
+    }
+    if(proveriCena()){
+      alert("cenata treba da e nad 0");
+      return;
+    }
+    price=Math.round(price*1.1);
+
+
+    if(select==="never-used"){
+      if(listaUnused.includes(code)){
+        alert("Kodot veke postoi!");
+        return;
+      }else{
+        brojac++;
+        listaUnused.push(code);
+        let tabelaUnused=document.getElementById("tabelaUnused");
+        let tr=document.createElement("tr");
+        tr.innerHTML="<td>"+name+"</td><td>"+item+"</td><td>"+price+"</td><td>"+code+"</td><td>"+kataloskiBroj()+"</td><td><button onclick='oboj(this)'>Sold</button></td>"
+        tabelaUnused.append(tr);
+      }
+    }else{
+      if(listaUsed.includes(code)){
+        alert("Kodot veke postoi!");
+        return;
+      }else{
+        brojac++;
+        listaUsed.push(code);
+        let tabelaUsed=document.getElementById("tabelaUsed");
+        let tr=document.createElement("tr");
+        tr.innerHTML="<td>"+name+"</td><td>"+item+"</td><td>"+price+"</td><td>"+code+"</td><td>"+kataloskiBroj()+"</td><td><button onclick='oboj(this)'>Sold</button></td>"
+        tabelaUsed.append(tr);
+      }
+    }
+
+    let active=document.getElementById("active");
+    active.innerHTML=brojac;
+  }
+  function oboj(kopce){
+    let roditel=kopce.parentNode.parentNode;
+    roditel.style.background="yellow";
+    kopce.remove();
+    brojac--;
+    let active=document.getElementById("active");
+    active.innerHTML=brojac;
+  }
+  function kataloskiBroj(){
+    let code=document.getElementById("code").value;
+    let string="";
+    for(let i=0;i<code.length;i++){
+      if(isNaN(code[i]) && (code[i]!=="!")){
+        string+=code[i];
+      }
+    }
+    return string;
+  }
+  function proveriCena(){
+    let price=document.getElementById("price").value;
+    if(price<0){
+      return true;
+    }
+    return false;
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prv kolokv 2017/8</title>
+    <style>
+       input,select{
+           position: relative;
+           left: 100px;
+           top: -35px;
+       }
+       div{
+           margin-top: -30px;
+       }
+       h1{
+           margin-bottom:50px;
+       }
+       .broj{
+           position: relative;
+           right: -100px;
+           top:-37px
+       }
+       button{
+           margin-top: 10px;
+       }
+    </style>
+</head>
+<body>
+<h1>Details</h1>
+<div>
+    <p>Name</p>
+    <input type="text" id="ime">
+</div>
+<div>
+    <p>Index</p>
+    <input type="text" id="index">
+</div>
+<div>
+    <p>Phone</p>
+    <input type="text" id="tel">
+</div>
+<div>
+   <p>Grade</p>
+    <input type="radio" name="isto" id="radio1"><span class="broj">5</span>
+    <input type="radio" name="isto" id="radio2"><span class="broj">6</span>
+    <input type="radio" name="isto" id="radio3"><span class="broj">7</span>
+    <input type="radio" name="isto" id="radio4"><span class="broj">8</span>
+    <input type="radio" name="isto" id="radio5"><span class="broj">9</span>
+    <input type="radio" name="isto" id="radio6"><span class="broj">10</span>
+</div>
+<div>
+    <p>Session</p>
+    <select id="session">
+        <option>January</option>
+        <option>June</option>
+        <option>September</option>
+    </select>
+</div>
+<div>
+    <button onclick="importStudent()">Import student</button>
+</div>
+<div id="prazen">
+
+</div>
+
+<script>
+    function importStudent(){
+        var ime=document.getElementById("ime").value;
+        var index=document.getElementById("index").value;
+        var phone=document.getElementById("tel").value;
+        var session=document.getElementById("session").value;
+        var radio1=document.getElementById("radio1");
+        var radio2=document.getElementById("radio2");
+        var radio3=document.getElementById("radio3");
+        var radio4=document.getElementById("radio4");
+        var radio5=document.getElementById("radio5");
+        var radio6=document.getElementById("radio6");
+
+        if(!(ime && index && phone)){
+            if (radio1.checked && radio2.checked && radio3.checked && radio4.checked && radio5.checked && radio6.checked) {
+                alert("vnesvote se");
+            } else {
+                alert("Vnesete gi site polinja")
+                return;
+            }
+        }
+        var pole=document.getElementById("prazen");
+        pole.innerHTML="<table><tr>Name</tr><tr>Index</tr><tr>Phone</tr><tr>Grade</tr><tr>Session</tr><tr>Actions</tr></table>";
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pravoagolnci</title>
+    <style>
+        #container {
+            width: 600px;
+            height: 500px;
+            border: 1px solid darkgray;
+        }
+
+        #container1_1, #container1_2, #container2 {
+            width: 600px;
+            height: 166px;
+            border: 1px solid darkgray;
+        }
+
+        #container2 {
+            display: flex;
+            flex-direction: row;
+        }
+
+
+        #container1_2 {
+            background-color: whitesmoke;
+        }
+
+        #container2 {
+            background-color: green;
+        }
+
+        #container2_1, #container2_2, #container2_3 {
+            width: 200px;
+        }
+
+        #container2_1 {
+            background-color: red;
+        }
+
+        #container2_2 {
+            background-color: lawngreen;
+        }
+
+        #container2_3 {
+            background-color: blue;
+        }
+
+
+    </style>
+</head>
+<body>
+<div id="container">
+    <div id="container1_1" onclick="vrati()"></div>
+    <div id="container1_2"></div>
+    <div id="container2">
+        <div id="container2_1" onclick="smeni()"></div>
+        <div id="container2_2" onclick="smeni1()"></div>
+        <div id="container2_3" onclick="smeni2()"></div>
+    </div>
+</div>
+<script>
+    let containerToChange = document.getElementById("container1_1");
+    function smeni() {
+        containerToChange.style.background = "radial-gradient(circle, red, white)";
+    }
+    function smeni1() {
+        containerToChange.style.background = "radial-gradient(circle, lawngreen, white)";
+    }
+    function smeni2() {
+        containerToChange.style.background = "radial-gradient(circle, blue, white)";
+    }
+    function vrati(){
+        containerToChange.style.background="white";
+    }
+</script>
+</body>
+</html>
